@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,11 @@ import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
@@ -36,6 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     private Context context;
     private RecyclerView recyclerView;
     private static int x = 0;
+    List<Integer>  integerList = IntStream.rangeClosed(20, 29).boxed().collect(Collectors.toList());
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
@@ -62,7 +69,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerListViewHolder listViewHolder, int i) {
         Log.e(getClass().getName(), "onBindViewHolder called index " + i);
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, i, this, null);
         boolean ad = false;
         View failedView = listViewHolder.getContainer();
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
@@ -130,13 +136,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public int getItemCount() {
-        return 10;
+        return integerList.size();
     }
 
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i % 2 == 0;
+        return integerList.get(i) % 2 == 0;
     }
 
     @Override
@@ -168,6 +174,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public void onFail(String s, int index) {
+        // protect against removing non ad views
+        if (shouldPlaceAdAtIndex(SECTION_URL, index)) {
+            integerList.remove(index);
+            notifyItemRemoved(index);
+            notifyItemChanged(index);
+        }
     }
 
     @Override
