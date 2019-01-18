@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/landing_boap_container">
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,5 +39,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:scrollbars="none"/>
+        <include layout="@layout/native_article" />\
     </LinearLayout>
 </ScrollView>

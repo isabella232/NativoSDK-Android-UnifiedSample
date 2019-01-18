@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +26,6 @@ import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
@@ -42,11 +38,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     private Context context;
     private RecyclerView recyclerView;
     private static int x = 0;
-    List<Integer>  integerList = IntStream.rangeClosed(20, 29).boxed().collect(Collectors.toList());
+    List<Integer>  integerList = new ArrayList<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
         this.recyclerView = recyclerView;
+        for (int i = 0; i < 20; i++) {
+            integerList.add(i);
+        }
     }
 
     @Override
@@ -68,7 +67,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerListViewHolder listViewHolder, int i) {
-        Log.e(getClass().getName(), "onBindViewHolder called index " + i);
         boolean ad = false;
         View failedView = listViewHolder.getContainer();
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {

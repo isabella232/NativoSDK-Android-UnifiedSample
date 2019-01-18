@@ -104,12 +104,16 @@ public class NativeVideoAd implements NtvVideoAdInterface {
 
     @Override
     public void displaySponsoredIndicators(boolean isSponsored) {
-        if (isSponsored) {
+        if (isSponsored && layout != null) {
             layout.setBackgroundResource(R.drawable.sponsored_border);
             sponsoredIndicator.setVisibility(View.VISIBLE);
         } else {
-            layout.setBackground(null);
-            sponsoredIndicator.setVisibility(View.INVISIBLE);
+            if (layout != null) {
+                layout.setBackground(null);
+            }
+            if (sponsoredIndicator != null) {
+                sponsoredIndicator.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
