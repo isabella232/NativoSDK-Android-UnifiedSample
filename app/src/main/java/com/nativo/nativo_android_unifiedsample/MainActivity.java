@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         NativoSDK.getInstance().registerLandingPage(new NativeLandingPage());
         NativoSDK.getInstance().registerVideoAd(new NativeVideoAd());
         NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
-//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
+        NativoSDK.getInstance().enableTestAdvertisements();
         NativoSDK.getInstance().enableDevLogs();
     }
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 1;
         }
 
         @Nullable

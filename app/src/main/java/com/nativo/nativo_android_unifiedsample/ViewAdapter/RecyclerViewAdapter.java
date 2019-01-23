@@ -25,7 +25,9 @@ import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
@@ -39,6 +41,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     private RecyclerView recyclerView;
     private static int x = 0;
     List<Integer>  integerList = new ArrayList<>();
+    Map<String, String> optionsVideo = new HashMap<>();
+    Map<String, String> optionsNative = new HashMap<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
@@ -46,6 +50,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         for (int i = 0; i < 20; i++) {
             integerList.add(i);
         }
+        optionsVideo.put("ntv_pl","242444");
+        optionsVideo.put("ntv_a","168646");
+        optionsNative.put("ntv_pl","242444");
+        optionsNative.put("ntv_a","168639");
     }
 
     @Override
@@ -71,11 +79,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         View failedView = listViewHolder.getContainer();
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
             if (listViewHolder instanceof NativeAdRecycler && NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
-                ad = NativoSDK.getInstance().placeAdInView(((NativeAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
+                ad = NativoSDK.getInstance().placeAdInView(((NativeAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, optionsNative);
             } else if (listViewHolder instanceof NativeVideoAdRecycler && NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
-                ad = NativoSDK.getInstance().placeAdInView(((NativeVideoAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
+                ad = NativoSDK.getInstance().placeAdInView(((NativeVideoAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, optionsVideo);
             } else {
-                ad = NativoSDK.getInstance().placeAdInView(failedView, recyclerView, SECTION_URL, i, this, null);
+                if (i%4==0){
+                    ad = NativoSDK.getInstance().placeAdInView(failedView, recyclerView, SECTION_URL, i, this, optionsVideo);
+                } else {
+                    ad = NativoSDK.getInstance().placeAdInView(failedView, recyclerView, SECTION_URL, i, this, optionsNative);
+                }
             }
         }
         if (!ad) {
