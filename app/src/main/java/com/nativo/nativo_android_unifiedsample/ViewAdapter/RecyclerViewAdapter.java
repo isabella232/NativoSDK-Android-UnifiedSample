@@ -25,7 +25,9 @@ import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
@@ -38,6 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     private Context context;
     private RecyclerView recyclerView;
     List<Integer> integerList = new ArrayList<>();
+    List<String> adsList = new ArrayList<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
@@ -45,6 +48,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         for (int i = 0; i < 20; i++) {
             integerList.add(i);
         }
+        adsList.add("194874");
+        adsList.add("168651");
+        adsList.add("168650");
+        adsList.add("168642");
+        adsList.add("168652");
+        adsList.add("241006");
+        adsList.add("168641");
+        adsList.add("168639");
+        adsList.add("168648");
+        adsList.add("180314");
     }
 
     @Override
@@ -74,7 +87,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
             } else if (listViewHolder instanceof NativeVideoAdRecycler && NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
                 ad = NativoSDK.getInstance().placeAdInView(((NativeVideoAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
             } else {
-                ad = NativoSDK.getInstance().placeAdInView(failedView, recyclerView, SECTION_URL, i, this, null);
+                Map<String, String> map = new HashMap<>();
+                map.put("ntv_pl", "242444");
+                map.put("ntv_a", adsList.get(i / 2));
+                ad = NativoSDK.getInstance().placeAdInView(failedView, recyclerView, SECTION_URL, i, this, map);
             }
         }
         if (!ad) {
@@ -172,11 +188,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     @Override
     public void onFail(String s, int index) {
         // protect against removing non ad views
-        if (shouldPlaceAdAtIndex(SECTION_URL, index)) {
-            integerList.remove(index);
-            notifyItemRemoved(index);
-            notifyItemChanged(index);
-        }
+//        if (shouldPlaceAdAtIndex(SECTION_URL, index)) {
+//            integerList.remove(index);
+//            notifyItemRemoved(index);
+//            notifyItemChanged(index);
+//        }
+//                notifyItemChanged(index);
     }
 
     @Override
