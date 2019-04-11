@@ -2,6 +2,7 @@ package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.Date;
 
 public class NativeVideoAdRecycler extends RecyclerListViewHolder implements NtvVideoAdInterface {
 
+    private static String TAG = NativeVideoAdRecycler.class.getName();
     private RelativeLayout layout;
     private TextureView textureView;
     private ImageView previewImage;
@@ -138,31 +140,31 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
 
     @Override
     public void onVideoEnteredFullscreen() {
-
+        Log.d(TAG, "onVideoEnteredFullscreen: ");
     }
 
     @Override
     public void onVideoExitedFullscreen() {
-
+        Log.d(TAG, "onVideoExitedFullscreen: ");
     }
 
     @Override
     public void onVideoPlay() {
-
+        Log.d(TAG, "onVideoPlay: ");
     }
 
     @Override
     public void onVideoPause() {
-
+        Log.d(TAG, "onVideoPause: ");
     }
 
     @Override
     public void onVideoPlaybackCompleted() {
-
+        Log.d(TAG, "onVideoPlaybackCompleted: ");
     }
 
     @Override
     public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
-
+        Log.d(TAG, "onVideoPlaybackError: ");
     }
 }
