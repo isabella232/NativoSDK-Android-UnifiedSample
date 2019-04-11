@@ -2,10 +2,10 @@ package com.nativo.nativo_android_unifiedsample.ViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +30,7 @@ import java.util.List;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
 
 
@@ -37,8 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     private Context context;
     private RecyclerView recyclerView;
-    private static int x = 0;
-    List<Integer>  integerList = new ArrayList<>();
+    List<Integer> integerList = new ArrayList<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
@@ -68,25 +68,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerListViewHolder listViewHolder, int i) {
         boolean ad = false;
-        View failedView = listViewHolder.getContainer();
-        if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
-            if (listViewHolder instanceof NativeAdRecycler && NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
-                ad = NativoSDK.getInstance().placeAdInView(((NativeAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
-            } else if (listViewHolder instanceof NativeVideoAdRecycler && NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
-                ad = NativoSDK.getInstance().placeAdInView(((NativeVideoAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
-            } else {
-                ad = NativoSDK.getInstance().placeAdInView(failedView, recyclerView, SECTION_URL, i, this, null);
-            }
+        View view = listViewHolder.getContainer();
+        if (listViewHolder instanceof NativeAdRecycler ||
+                listViewHolder instanceof NativeVideoAdRecycler) {
+            ad = NativoSDK.getInstance().placeAdInView(view,
+                    recyclerView, SECTION_URL, i, this, null);
         }
+
         if (!ad) {
             bindView(listViewHolder.getContainer(), i);
+            NativoSDK.getInstance().placeAdInView(view, recyclerView,
+                    SECTION_URL, i, this, null);
         }
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        String s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, position);
+        String s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, position);
         switch (s) {
             case NtvAdTypeConstants.AD_TYPE_VIDEO:
                 return 2;
@@ -116,11 +115,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            if (shouldPlaceAdAtIndex("sample", i)) {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
-            } else {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
-            }
             view.setOnClickListener(onClickListener);
         }
     }
@@ -140,7 +134,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return integerList.get(i) % 2 == 0;
+        return i % 2 == 0;
     }
 
     @Override
@@ -152,7 +146,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
                 .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i));
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, recyclerView.hashCode()));
     }
 
     @Override
@@ -173,11 +168,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     @Override
     public void onFail(String s, int index) {
         // protect against removing non ad views
-        if (shouldPlaceAdAtIndex(SECTION_URL, index)) {
-            integerList.remove(index);
-            notifyItemRemoved(index);
-            notifyItemChanged(index);
-        }
+        integerList.remove(index);
+        notifyItemRemoved(index);
+        notifyItemChanged(index);
     }
 
     @Override

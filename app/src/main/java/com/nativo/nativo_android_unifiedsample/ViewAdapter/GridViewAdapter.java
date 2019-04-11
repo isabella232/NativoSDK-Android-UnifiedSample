@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,13 +28,12 @@ import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTI
 
 public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
-    private static String RSS_URL = "http://www.engadget.com/rss.xml";
-    Context context;
-    ViewGroup parent;
+    private Context context;
+    private GridView gridView;
 
-    public GridViewAdapter(Context context, ViewGroup parent) {
+    public GridViewAdapter(Context context, GridView gridView) {
         this.context = context;
-        this.parent = parent;
+        this.gridView = gridView;
     }
 
     @Override
@@ -59,12 +56,12 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, gridView, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, gridView, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, parent, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.getInstance().placeAdInView(view, gridView, SECTION_URL, i, this, null);
         if (!ad) {
             bindView(view, i);
         }
@@ -130,13 +127,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
-
+        notifyDataSetChanged();
     }
 
     @Override
@@ -144,19 +135,4 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     }
 
-    class ViewHolder {
-        View container;
-        ImageView articleImage;
-        TextView articleTitle;
-        TextView articleAuthor;
-        ImageView articleSponsor;
-
-        ViewHolder(@NonNull View container) {
-            this.container = container;
-            articleImage = container.findViewById(R.id.article_image);
-            articleTitle = container.findViewById(R.id.article_title);
-            articleAuthor = container.findViewById(R.id.article_author);
-            articleSponsor = container.findViewById(R.id.sponsored_ad_indicator);
-        }
-    }
 }

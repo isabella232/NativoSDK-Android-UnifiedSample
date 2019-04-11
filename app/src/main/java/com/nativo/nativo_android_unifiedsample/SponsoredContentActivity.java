@@ -10,6 +10,7 @@ import net.nativo.sdk.NativoSDK;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
 
 public class SponsoredContentActivity extends AppCompatActivity {
@@ -20,7 +21,8 @@ public class SponsoredContentActivity extends AppCompatActivity {
 
         String sectionUrl = getIntent().getStringExtra(SP_SECTION_URL);
         int campaignId = getIntent().getIntExtra(SP_CAMPAIGN_ID, 0);
+        Integer containerHash = getIntent().getIntExtra(SP_CONTAINER_HASH, 0);
         //pass in the class that implemented the NtvLandingPageInterface. Can be different layout classes that you switch between
-        NativoSDK.getInstance().initLandingPage(this, sectionUrl, campaignId, NativeLandingPage.class);
+        NativoSDK.getInstance().initLandingPage(this, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
     }
 }

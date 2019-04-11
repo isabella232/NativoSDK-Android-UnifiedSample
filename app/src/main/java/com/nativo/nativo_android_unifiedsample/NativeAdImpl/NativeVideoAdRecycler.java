@@ -14,6 +14,7 @@ import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
+import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;
 
 import java.util.Date;
 
@@ -133,5 +134,35 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     @Override
     public ProgressBar getProgressBar() {
         return progressBar;
+    }
+
+    @Override
+    public void onVideoEnteredFullscreen() {
+
+    }
+
+    @Override
+    public void onVideoExitedFullscreen() {
+
+    }
+
+    @Override
+    public void onVideoPlay() {
+
+    }
+
+    @Override
+    public void onVideoPause() {
+
+    }
+
+    @Override
+    public void onVideoPlaybackCompleted() {
+
+    }
+
+    @Override
+    public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
+
     }
 }

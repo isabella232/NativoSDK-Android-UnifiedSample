@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nativo.nativo_android_unifiedsample.R;
 
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
+import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;
 
 import java.util.Date;
 
@@ -125,5 +126,35 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     @Override
     public ProgressBar getProgressBar() {
         return progressBar;
+    }
+
+    @Override
+    public void onVideoEnteredFullscreen() {
+
+    }
+
+    @Override
+    public void onVideoExitedFullscreen() {
+
+    }
+
+    @Override
+    public void onVideoPlay() {
+
+    }
+
+    @Override
+    public void onVideoPause() {
+
+    }
+
+    @Override
+    public void onVideoPlaybackCompleted() {
+
+    }
+
+    @Override
+    public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
+
     }
 }
