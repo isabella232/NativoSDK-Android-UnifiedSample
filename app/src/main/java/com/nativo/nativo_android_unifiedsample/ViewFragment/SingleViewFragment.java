@@ -47,7 +47,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         convertView = view.findViewById(R.id.article_container);
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, 0, viewFragment, null);
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) view,0, viewFragment, null);
         if (!getAd()) {
             bindView(view, 0);
         }
