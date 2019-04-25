@@ -23,12 +23,6 @@ public class GridFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_grid, container, false);
         GridView gridView = root.findViewById(R.id.grid_view);
         gridView.setAdapter(new GridViewAdapter(getContext(), gridView));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(getClass().getName(), "fragment click ...");
-            }
-        });
         return root;
     }
 }

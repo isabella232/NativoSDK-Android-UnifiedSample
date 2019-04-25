@@ -41,7 +41,7 @@ public class TableFragment extends Fragment {
     View.OnClickListener loadAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            NativoSDK.getInstance().clearAdsInSection(SECTION_URL);
+            NativoSDK.getInstance().clearAdsInSection(SECTION_URL, listView);
             tableViewAdapter.notifyDataSetChanged();
         }
     };

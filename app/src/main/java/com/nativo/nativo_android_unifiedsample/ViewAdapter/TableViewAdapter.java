@@ -22,14 +22,15 @@ import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
 
 public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
-    private ViewGroup parent;
+    private ViewGroup listView;
 
     public TableViewAdapter(ViewGroup parent) {
-        this.parent = parent;
+        this.listView = parent;
     }
 
     @Override
@@ -49,17 +50,17 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, i, this, null);
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, listView, i, this, null);
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
 
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, parent, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.getInstance().placeAdInView(view, listView, SECTION_URL, i, this, null);
         if (!ad) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             bindView(view, i);
@@ -113,14 +114,15 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-        parent.getContext().startActivity(new Intent(parent.getContext(), SponsoredContentActivity.class)
+        listView.getContext().startActivity(new Intent(listView.getContext(), SponsoredContentActivity.class)
                 .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i));
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, listView.hashCode()));
     }
 
     @Override
     public void needsDisplayClickOutURL(String s, String s1) {
-        parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
+        listView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
     @Override
