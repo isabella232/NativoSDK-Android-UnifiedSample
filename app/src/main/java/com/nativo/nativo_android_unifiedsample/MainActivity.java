@@ -15,6 +15,7 @@ import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.DfpFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.GridFragment;
+import com.nativo.nativo_android_unifiedsample.ViewFragment.MOAPFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.RecyclerViewFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewVideoFragment;
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
                     return new SingleViewVideoFragment();
                 case 5:
                     return new DfpFragment();
+                case 6:
+                    return new MOAPFragment();
             }
             return null;
         }
@@ -113,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     return getResources().getText(R.string.single_view_video);
                 case 5:
                     return getResources().getText(R.string.dfp);
+                case 6:
+                    return getResources().getText(R.string.moap);
             }
             return null;
         }
