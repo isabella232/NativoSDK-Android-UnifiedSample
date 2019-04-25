@@ -6,4 +6,5 @@ public class AppConstants {
     public static final String CLICK_OUT_URL = "https://www.nativo.com/";
     public static final String SP_CAMPAIGN_ID = "CAMPAIGN_ID";
     public static final String SP_SECTION_URL = "SECTION_URL";
+    public static final String SP_CONTAINER_HASH = "CONTAINER_HASH";
 }

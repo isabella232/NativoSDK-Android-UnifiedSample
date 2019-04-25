@@ -25,6 +25,7 @@ import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
 
 public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
@@ -47,7 +48,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         convertView = view.findViewById(R.id.article_container);
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, 0, viewFragment, null);
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) view,0, viewFragment, null);
         if (!getAd()) {
             bindView(view, 0);
         }
@@ -96,8 +97,8 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     View.OnClickListener loadAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, 0, viewFragment, null);
-            Log.d(getClass().getName(), NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, 0));
+            NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) getView(),0, viewFragment, null);
+            Log.d(getClass().getName(), NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL,(ViewGroup) getView(), 0));
             if (!getAd()) {
                 bindView(getView(), 0);
             }
@@ -132,7 +133,8 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     public void needsDisplayLandingPage(String s, int i) {
         getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
                 .putExtra(SP_CAMPAIGN_ID, s)
-                .putExtra(SP_CAMPAIGN_ID, i));
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, getView().hashCode()));
     }
 
     @Override

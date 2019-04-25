@@ -1,6 +1,7 @@
 package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,11 +12,13 @@ import android.widget.TextView;
 import com.nativo.nativo_android_unifiedsample.R;
 
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
+import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;
 
 import java.util.Date;
 
 public class NativeVideoAd implements NtvVideoAdInterface {
 
+    private static String TAG = NativeVideoAd.class.getName();
     private RelativeLayout layout;
     private TextureView textureView;
     private ImageView previewImage;
@@ -125,5 +128,35 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     @Override
     public ProgressBar getProgressBar() {
         return progressBar;
+    }
+
+    @Override
+    public void onVideoEnteredFullscreen() {
+        Log.d(TAG, "onVideoEnteredFullscreen: ");
+    }
+
+    @Override
+    public void onVideoExitedFullscreen() {
+        Log.d(TAG, "onVideoExitedFullscreen: ");
+    }
+
+    @Override
+    public void onVideoPlay() {
+        Log.d(TAG, "onVideoPlay: ");
+    }
+
+    @Override
+    public void onVideoPause() {
+        Log.d(TAG, "onVideoPause: ");
+    }
+
+    @Override
+    public void onVideoPlaybackCompleted() {
+        Log.d(TAG, "onVideoPlaybackCompleted: ");
+    }
+
+    @Override
+    public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
+        Log.d(TAG, "onVideoPlaybackError: ");
     }
 }

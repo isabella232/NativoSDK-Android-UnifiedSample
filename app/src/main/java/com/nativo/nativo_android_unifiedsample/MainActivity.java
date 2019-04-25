@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 1;
         }
 
         @Nullable

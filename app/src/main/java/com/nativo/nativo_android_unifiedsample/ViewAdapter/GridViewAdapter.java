@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,25 +21,32 @@ import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
 
 public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
-    private static String RSS_URL = "http://www.engadget.com/rss.xml";
-    Context context;
-    ViewGroup parent;
+    private Context context;
+    private GridView gridView;
+    List<Integer> integerList = new ArrayList<>();
 
-    public GridViewAdapter(Context context, ViewGroup parent) {
+    public GridViewAdapter(Context context, GridView gridView) {
         this.context = context;
-        this.parent = parent;
+        this.gridView = gridView;
+        for (int i = 0; i < 10; i++) {
+            integerList.add(i);
+        }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return integerList.size();
     }
 
     @Override
@@ -56,18 +61,26 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
-        }
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
+        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
+
+        String adType = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, gridView, i);
+        if (adType.equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
+        } else if (adType.equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, parent, SECTION_URL, i, this, null);
-        if (!ad) {
+
+        if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
+            boolean ad = NativoSDK.getInstance().placeAdInView(view, gridView, SECTION_URL, i, this, null);
+            if (!ad) {
+                view.setVisibility(View.GONE);
+            } else {
+                view.setVisibility(View.VISIBLE);
+            }
+        } else {
             bindView(view, i);
         }
+
         return view;
     }
 
@@ -103,7 +116,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
+        return integerList.get(i) % 2 == 0 && integerList.contains(i);
     }
 
     @Override
@@ -115,7 +128,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
                 .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i));
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, gridView.hashCode()));
     }
 
     @Override
@@ -130,33 +144,13 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
-
+        notifyDataSetChanged();
     }
 
     @Override
     public void onFail(String s, int index) {
-
+        integerList.remove(integerList.indexOf(index));
+        notifyDataSetChanged();
     }
 
-    class ViewHolder {
-        View container;
-        ImageView articleImage;
-        TextView articleTitle;
-        TextView articleAuthor;
-        ImageView articleSponsor;
-
-        ViewHolder(@NonNull View container) {
-            this.container = container;
-            articleImage = container.findViewById(R.id.article_image);
-            articleTitle = container.findViewById(R.id.article_title);
-            articleAuthor = container.findViewById(R.id.article_author);
-            articleSponsor = container.findViewById(R.id.sponsored_ad_indicator);
-        }
-    }
 }
