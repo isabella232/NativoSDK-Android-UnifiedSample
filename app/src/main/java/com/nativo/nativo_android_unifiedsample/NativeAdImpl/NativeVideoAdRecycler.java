@@ -118,7 +118,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     public void displaySponsoredIndicators(boolean isSponsored) {
         if (isSponsored) {
             layout.setBackgroundResource(R.drawable.sponsored_border);
-            sponsoredIndicator.setVisibility(View.VISIBLE);
+            sponsoredIndicator.setVisibility(View.GONE);
         } else {
             layout.setBackground(null);
             sponsoredIndicator.setVisibility(View.INVISIBLE);

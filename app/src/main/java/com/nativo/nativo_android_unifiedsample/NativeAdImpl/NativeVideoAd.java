@@ -106,7 +106,7 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     public void displaySponsoredIndicators(boolean isSponsored) {
         if (isSponsored && layout != null) {
             layout.setBackgroundResource(R.drawable.sponsored_border);
-            sponsoredIndicator.setVisibility(View.VISIBLE);
+            sponsoredIndicator.setVisibility(View.GONE);
         } else {
             if (layout != null) {
                 layout.setBackground(null);
