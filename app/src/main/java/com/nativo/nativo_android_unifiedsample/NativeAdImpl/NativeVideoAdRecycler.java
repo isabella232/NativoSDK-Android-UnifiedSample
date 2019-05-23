@@ -1,7 +1,6 @@
 package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -63,7 +62,6 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
         restartButton = (ImageView) v.findViewById(R.id.restart);
         titleLabel = (TextView) v.findViewById(R.id.title);
         authorLabel = (TextView) v.findViewById(R.id.author);
-        sponsoredIndicator = (ImageView) v.findViewById(R.id.sponsored_indicator);
         progressBar = v.findViewById(R.id.video_progress_bar);
     }
 
@@ -121,10 +119,8 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     public void displaySponsoredIndicators(boolean isSponsored) {
         if (isSponsored) {
             layout.setBackgroundResource(R.drawable.sponsored_border);
-            sponsoredIndicator.setVisibility(View.VISIBLE);
         } else {
             layout.setBackground(null);
-            sponsoredIndicator.setVisibility(View.INVISIBLE);
         }
     }
 
