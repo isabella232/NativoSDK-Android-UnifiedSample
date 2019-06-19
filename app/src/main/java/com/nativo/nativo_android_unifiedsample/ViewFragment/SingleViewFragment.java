@@ -156,4 +156,16 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     public void onFail(String s, int index) {
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, (ViewGroup) getView());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, (ViewGroup) getView());
+    }
 }

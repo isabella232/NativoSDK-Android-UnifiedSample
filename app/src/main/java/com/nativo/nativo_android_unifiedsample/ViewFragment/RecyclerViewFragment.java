@@ -11,19 +11,36 @@ import android.view.ViewGroup;
 import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.ViewAdapter.RecyclerViewAdapter;
 
+import net.nativo.sdk.NativoSDK;
+
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+
 public class RecyclerViewFragment extends Fragment {
 
+    RecyclerView recyclerView;
+    RecyclerViewAdapter viewAdapter;
     public RecyclerViewFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycler_list_view, container, false);
-        RecyclerViewAdapter viewAdapter = new RecyclerViewAdapter(getContext(), recyclerView);
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycler_list_view, container, false);
+        viewAdapter = new RecyclerViewAdapter(getContext(), recyclerView);
         recyclerView.setAdapter(viewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return recyclerView;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, recyclerView);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewAdapter.cleanAdapter();
+    }
 }

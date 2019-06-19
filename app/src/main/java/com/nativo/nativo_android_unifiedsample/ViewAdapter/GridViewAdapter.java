@@ -153,4 +153,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         notifyDataSetChanged();
     }
 
+    public void cleanAdapter() {
+        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, gridView);
+    }
+
 }

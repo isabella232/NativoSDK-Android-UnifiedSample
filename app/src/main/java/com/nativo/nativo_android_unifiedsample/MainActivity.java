@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentViewAdapter fragmentViewAdapter = new FragmentViewAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(fragmentViewAdapter);
+        viewPager.setOffscreenPageLimit(0);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         init();
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 1;
+            return 3;
         }
 
         @Nullable

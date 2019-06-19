@@ -177,4 +177,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         return position;
     }
 
+    public void cleanAdapter(){
+        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, recyclerView);
+    }
 }

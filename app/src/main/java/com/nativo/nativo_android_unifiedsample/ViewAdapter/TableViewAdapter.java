@@ -140,4 +140,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     }
 
+    public void cleanAdapter(){
+        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, listView);
+    }
 }

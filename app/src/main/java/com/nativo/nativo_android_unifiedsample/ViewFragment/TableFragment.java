@@ -67,4 +67,15 @@ public class TableFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tableViewAdapter.cleanAdapter();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        tableViewAdapter.cleanAdapter();
+    }
 }
