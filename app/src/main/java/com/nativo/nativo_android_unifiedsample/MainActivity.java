@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAd;
+import com.nativo.nativo_android_unifiedsample.NativeAdImpl.StandardDisplayAd;
+import com.nativo.nativo_android_unifiedsample.NativeAdImpl.StandardDisplayAdRecycler;
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.DfpFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.GridFragment;
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         NativoSDK.getInstance().registerLandingPage(new NativeLandingPage());
         NativoSDK.getInstance().registerVideoAd(new NativeVideoAd());
         NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
-//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
+        NativoSDK.getInstance().registerStandardDisplayAd(new StandardDisplayAd());
+        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
         NativoSDK.getInstance().enableDevLogs();
     }
 

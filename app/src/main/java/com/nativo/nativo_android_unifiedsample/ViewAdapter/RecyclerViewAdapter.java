@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAdRecycler;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAdRecycler;
+import com.nativo.nativo_android_unifiedsample.NativeAdImpl.StandardDisplayAdRecycler;
 import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
@@ -57,6 +58,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         } else if (i == 2) {
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
             viewHolder = new NativeVideoAdRecycler(adViewTry, viewGroup);
+        } else if (i == 3) {
+            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
+            viewHolder = new StandardDisplayAdRecycler(adViewTry, viewGroup);
         } else {
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
             viewHolder = new RecyclerListViewHolder(adViewTry, viewGroup);
@@ -69,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         boolean ad = false;
         View view = listViewHolder.getContainer();
         if (listViewHolder instanceof NativeAdRecycler ||
-                listViewHolder instanceof NativeVideoAdRecycler) {
+                listViewHolder instanceof NativeVideoAdRecycler || listViewHolder instanceof StandardDisplayAdRecycler) {
             ad = NativoSDK.getInstance().placeAdInView(view,
                     recyclerView, SECTION_URL, i, this, null);
         }
@@ -86,6 +90,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     public int getItemViewType(int position) {
         String s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, position);
         switch (s) {
+            case NtvAdTypeConstants.AD_TYPE_STANDARD_DISPLAY:
+                return 3;
             case NtvAdTypeConstants.AD_TYPE_VIDEO:
                 return 2;
             case NtvAdTypeConstants.AD_TYPE_NATIVE:
@@ -133,7 +139,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i % 2 == 0;
+        return i == 1;
     }
 
     @Override
@@ -161,15 +167,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
+
         notifyItemChanged(index);
     }
 
     @Override
     public void onFail(String s, int index) {
         // protect against removing non ad views
-        integerList.remove(index);
-        notifyItemRemoved(index);
-        notifyItemChanged(index);
+//        integerList.remove(index);
+//        notifyItemRemoved(index);
+//        notifyItemChanged(index);
     }
 
     @Override

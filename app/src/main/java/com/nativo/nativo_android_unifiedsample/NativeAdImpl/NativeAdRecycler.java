@@ -110,6 +110,11 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     }
 
     @Override
+    public ImageView getAdChoicesImageView() {
+        return null;
+    }
+
+    @Override
     public void bindViews(View v) {
         view = v;
         layout = v.findViewById(R.id.article_layout);

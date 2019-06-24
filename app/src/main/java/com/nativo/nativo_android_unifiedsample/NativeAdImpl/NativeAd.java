@@ -111,4 +111,9 @@ public class NativeAd implements NtvNativeAdInterface {
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
     }
+
+    @Override
+    public ImageView getAdChoicesImageView() {
+        return null;
+    }
 }

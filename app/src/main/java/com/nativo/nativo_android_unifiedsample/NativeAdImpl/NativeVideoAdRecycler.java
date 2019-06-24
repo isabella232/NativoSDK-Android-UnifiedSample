@@ -125,6 +125,11 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     }
 
     @Override
+    public ImageView getAdChoicesImageView() {
+        return null;
+    }
+
+    @Override
     public String formatDate(Date date) {
         return null;
     }
