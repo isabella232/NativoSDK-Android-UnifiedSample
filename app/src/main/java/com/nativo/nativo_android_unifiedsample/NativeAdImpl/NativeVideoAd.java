@@ -116,6 +116,11 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     }
 
     @Override
+    public ImageView getMuteIndicator() {
+        return null;
+    }
+
+    @Override
     public ImageView getAdChoicesImageView() {
         return null;
     }
