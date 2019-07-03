@@ -24,6 +24,7 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     private ImageView previewImage;
     private ImageView playButton;
     private ImageView restartButton;
+    private ImageView muteIndicator;
     private TextView titleLabel;
     private TextView authorLabel;
     private ImageView sponsoredIndicator;
@@ -52,6 +53,7 @@ public class NativeVideoAd implements NtvVideoAdInterface {
         titleLabel = (TextView) v.findViewById(R.id.title);
         authorLabel = (TextView) v.findViewById(R.id.author);
         progressBar = v.findViewById(R.id.video_progress_bar);
+        muteIndicator = v.findViewById(R.id.mute_indicator);
     }
 
     @Override
@@ -117,7 +119,7 @@ public class NativeVideoAd implements NtvVideoAdInterface {
 
     @Override
     public ImageView getMuteIndicator() {
-        return null;
+        return muteIndicator;
     }
 
     @Override

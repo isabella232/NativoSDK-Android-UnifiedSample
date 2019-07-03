@@ -26,6 +26,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     private ImageView previewImage;
     private ImageView playButton;
     private ImageView restartButton;
+    private ImageView muteIndicator;
     private TextView titleLabel;
     private TextView authorLabel;
     private ImageView sponsoredIndicator;
@@ -63,6 +64,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
         titleLabel = (TextView) v.findViewById(R.id.title);
         authorLabel = (TextView) v.findViewById(R.id.author);
         progressBar = v.findViewById(R.id.video_progress_bar);
+        muteIndicator = v.findViewById(R.id.mute_indicator);
     }
 
     @Override
@@ -126,7 +128,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
 
     @Override
     public ImageView getMuteIndicator() {
-        return null;
+        return muteIndicator;
     }
 
     @Override

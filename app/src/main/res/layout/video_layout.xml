@@ -65,6 +65,14 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/mute_indicator"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"/>
         </FrameLayout>
 
         <TextView
