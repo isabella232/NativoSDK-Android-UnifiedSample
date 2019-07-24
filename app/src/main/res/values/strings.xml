@@ -9,6 +9,7 @@
     <string name="single_view">Single Ad</string>
     <string name="single_view_video">Single Video</string>
     <string name="dfp">DFP</string>
+    <string name="moap">MOAP</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment one</string>
