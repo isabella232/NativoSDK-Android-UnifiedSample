@@ -68,6 +68,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
         } else if (adType.equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
+        } else if (adType.equals(NtvAdTypeConstants.AD_TYPE_STANDARD_DISPLAY)){
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
         }
 
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
