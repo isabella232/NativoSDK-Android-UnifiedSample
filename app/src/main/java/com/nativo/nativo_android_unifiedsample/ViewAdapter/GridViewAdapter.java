@@ -151,7 +151,10 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void onFail(String s, int index) {
-        integerList.remove(integerList.indexOf(index));
+        int i = integerList.indexOf(index);
+        if (i != -1) {
+            integerList.remove(i);
+        }
         notifyDataSetChanged();
     }
 
