@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,7 +140,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i == 1;
+        return i % 2 == 1;
     }
 
     @Override
@@ -174,9 +175,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     @Override
     public void onFail(String s, int index) {
         // protect against removing non ad views
-//        integerList.remove(index);
-//        notifyItemRemoved(index);
-//        notifyItemChanged(index);
+        integerList.remove(index);
+        notifyItemRemoved(index);
+        notifyItemChanged(index);
     }
 
     @Override

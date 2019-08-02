@@ -22,6 +22,7 @@ import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
@@ -72,8 +73,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
         }
 
+        boolean ad = NativoSDK.getInstance().placeAdInView(view, gridView, SECTION_URL, i, this, null);
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
-            boolean ad = NativoSDK.getInstance().placeAdInView(view, gridView, SECTION_URL, i, this, null);
             if (!ad) {
                 view.setVisibility(View.GONE);
             } else {
@@ -118,7 +119,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return integerList.get(i) % 2 == 0 && integerList.contains(i);
+        return i % 2 == 0;
     }
 
     @Override
@@ -151,10 +152,6 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void onFail(String s, int index) {
-        int i = integerList.indexOf(index);
-        if (i != -1) {
-            integerList.remove(i);
-        }
         notifyDataSetChanged();
     }
 
