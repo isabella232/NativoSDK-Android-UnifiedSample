@@ -75,8 +75,8 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void contentWebViewOnPageFinished() {
-        View view = adContainerView.findViewById(R.id.article_layout);
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL,(ViewGroup) view, new Random().nextInt(), this, null);
+        ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, viewGroup, new Random().nextInt(), this, null);
     }
 
     @Override

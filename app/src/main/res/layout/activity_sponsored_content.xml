@@ -3,14 +3,14 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:id="@+id/landing_boap_container">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:id="@+id/landing_boap_container">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
