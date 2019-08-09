@@ -15,6 +15,13 @@
         android:foreground="?android:selectableItemBackground"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/adchoices_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            tools:visibility="visible" />
+
         <FrameLayout
             android:id="@+id/video_frame"
             android:layout_width="450dp"

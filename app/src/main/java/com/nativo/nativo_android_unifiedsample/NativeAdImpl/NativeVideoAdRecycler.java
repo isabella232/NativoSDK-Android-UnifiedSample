@@ -30,6 +30,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     private TextView titleLabel;
     private TextView authorLabel;
     private ImageView sponsoredIndicator;
+    private ImageView adChoicesIndicator;
     private ProgressBar progressBar;
     private View adContainerView;
 
@@ -65,6 +66,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
         authorLabel = (TextView) v.findViewById(R.id.author);
         progressBar = v.findViewById(R.id.video_progress_bar);
         muteIndicator = v.findViewById(R.id.mute_indicator);
+        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
     }
 
     @Override
@@ -133,7 +135,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
 
     @Override
     public ImageView getAdChoicesImageView() {
-        return null;
+        return adChoicesIndicator;
     }
 
     @Override

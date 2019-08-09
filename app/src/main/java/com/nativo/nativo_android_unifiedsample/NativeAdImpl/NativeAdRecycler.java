@@ -30,6 +30,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     private ImageView articleAuthorImage;
     private ImageView image;
     private ImageView sponsoredIndicator;
+    private ImageView adChoicesIndicator;
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
@@ -111,7 +112,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
 
     @Override
     public ImageView getAdChoicesImageView() {
-        return null;
+        return adChoicesIndicator;
     }
 
     @Override
@@ -127,5 +128,6 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
         sponsoredIndicator = v.findViewById(R.id.sponsored_ad_indicator);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
+        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
     }
 }
