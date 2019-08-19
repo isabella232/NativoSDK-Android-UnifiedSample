@@ -25,6 +25,7 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
+import net.nativo.sdk.ntvcore.NtvAdData;
 
 public class MainActivity extends AppCompatActivity {
 
