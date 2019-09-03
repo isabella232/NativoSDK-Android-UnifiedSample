@@ -74,7 +74,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         mPublisherAdView.setAdSizes(ntvAdSize,AdSize.BANNER);
         // Create an ad request.
         final PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
-                .addCustomTargeting("ntvPlacement","991150").build();
+                .addCustomTargeting("ntvPlacement","1092187").build();
 
         mPublisherAdView.setAdListener(new AdListener() {
             @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -84,7 +84,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
                 Log.d("DFP","adUnit: "+mPublisherAdView.getAdUnitId()+" adSize: "+mPublisherAdView.getAdSize());
                 if(mPublisherAdView.getAdSize().equals(ntvAdSize) ) {
                     //call nativo.dfp.bannerexample.sdk method here pass in the mAdView to parse out the html
-                    NativoSDK.getInstance().makeDFPRequestWithPublisherAdView(mPublisherAdView, DFP_SECTION_URL, 0, fragmentAdapter);
+                    NativoSDK.getInstance().makeDFPRequestWithPublisherAdView(mPublisherAdView, parentView,DFP_SECTION_URL, 0, fragmentAdapter);
                 }
                 else{
                     Log.d("DFP", "Did receive DFP banner ad");
