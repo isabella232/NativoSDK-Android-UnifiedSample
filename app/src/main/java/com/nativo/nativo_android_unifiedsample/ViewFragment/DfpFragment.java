@@ -59,7 +59,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        parentView = (ViewGroup) view.getParent();
+        parentView = (ViewGroup) view;
         nativoView = view.findViewById(R.id.article_constraint_layout);
         nativoView.setVisibility(View.INVISIBLE);
         NativoSDK.getInstance().enableDFPRequestsWithVersion("17.0.0");
