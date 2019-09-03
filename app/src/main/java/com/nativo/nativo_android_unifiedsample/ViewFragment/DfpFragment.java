@@ -2,6 +2,8 @@ package com.nativo.nativo_android_unifiedsample.ViewFragment;
 
 
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +20,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
@@ -25,6 +28,9 @@ import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.DFP_SECTION_URL;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
 
 /*
 * This sample use the Nativo DFP account
@@ -112,12 +118,15 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-
+        getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
+                .putExtra(SP_SECTION_URL, s)
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, parentView.hashCode()));
     }
 
     @Override
     public void needsDisplayClickOutURL(String s, String s1) {
-
+        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
     @Override
