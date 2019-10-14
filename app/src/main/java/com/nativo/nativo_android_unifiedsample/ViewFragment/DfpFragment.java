@@ -2,6 +2,8 @@ package com.nativo.nativo_android_unifiedsample.ViewFragment;
 
 
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +20,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
@@ -25,6 +28,9 @@ import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.DFP_SECTION_URL;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
 
 /*
 * This sample use the Nativo DFP account
@@ -59,7 +65,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        parentView = (ViewGroup) view.getParent();
+        parentView = (ViewGroup) view;
         nativoView = view.findViewById(R.id.article_constraint_layout);
         nativoView.setVisibility(View.INVISIBLE);
         NativoSDK.getInstance().enableDFPRequestsWithVersion("17.0.0");
@@ -74,7 +80,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         mPublisherAdView.setAdSizes(ntvAdSize,AdSize.BANNER);
         // Create an ad request.
         final PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
-                .addCustomTargeting("ntvPlacement","991150").build();
+                .addCustomTargeting("ntvPlacement","1092187").build();
 
         mPublisherAdView.setAdListener(new AdListener() {
             @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -84,7 +90,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
                 Log.d("DFP","adUnit: "+mPublisherAdView.getAdUnitId()+" adSize: "+mPublisherAdView.getAdSize());
                 if(mPublisherAdView.getAdSize().equals(ntvAdSize) ) {
                     //call nativo.dfp.bannerexample.sdk method here pass in the mAdView to parse out the html
-                    NativoSDK.getInstance().makeDFPRequestWithPublisherAdView(mPublisherAdView, DFP_SECTION_URL, 0, fragmentAdapter);
+                    NativoSDK.getInstance().makeDFPRequestWithPublisherAdView(mPublisherAdView, parentView,DFP_SECTION_URL, 0, fragmentAdapter);
                 }
                 else{
                     Log.d("DFP", "Did receive DFP banner ad");
@@ -112,12 +118,15 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-
+        getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
+                .putExtra(SP_SECTION_URL, s)
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, parentView.hashCode()));
     }
 
     @Override
     public void needsDisplayClickOutURL(String s, String s1) {
-
+        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
     @Override

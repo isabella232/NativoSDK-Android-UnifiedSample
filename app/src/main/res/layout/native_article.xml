@@ -90,7 +90,6 @@
                 android:layout_margin="2dp"
                 android:layout_toEndOf="@id/article_image"
                 android:textStyle="italic"
-                android:text="@string/by"
                 android:fontFamily="sans-serif"
                 tools:text="By" />
 
@@ -114,14 +113,14 @@
                 tools:src="@drawable/nativo_icon" />
 
             <ImageView
-                android:id="@+id/sponsored_ad_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/adchoices_indicator"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_alignEnd="@id/article_image"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/article_image"
-                android:src="@drawable/sponsored_indicator"
-                tools:visibility="visible" />
+                tools:visibility="visible"
+                tools:src="@drawable/ad_choices"/>
 
         </RelativeLayout>
 

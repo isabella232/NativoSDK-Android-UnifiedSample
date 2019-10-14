@@ -11,7 +11,13 @@ import android.view.ViewGroup;
 import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.ViewAdapter.RecyclerViewAdapter;
 
+import net.nativo.sdk.NativoSDK;
+
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+
 public class RecyclerViewFragment extends Fragment {
+
+    RecyclerView recyclerView;
 
     public RecyclerViewFragment() {
     }
@@ -19,11 +25,17 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycler_list_view, container, false);
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycler_list_view, container, false);
         RecyclerViewAdapter viewAdapter = new RecyclerViewAdapter(getContext(), recyclerView);
         recyclerView.setAdapter(viewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return recyclerView;
     }
 
+    // calling clear ads in section when your app transitions to new activity or fragment
+    @Override
+    public void onPause() {
+        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, recyclerView);
+        super.onPause();
+    }
 }

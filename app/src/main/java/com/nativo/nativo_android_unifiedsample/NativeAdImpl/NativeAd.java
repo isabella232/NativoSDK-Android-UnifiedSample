@@ -26,7 +26,7 @@ public class NativeAd implements NtvNativeAdInterface {
     private TextView articleDateLabel;
     private ImageView articleAuthorImage;
     private ImageView image;
-    private ImageView sponsoredIndicator;
+    private ImageView adChoicesIndicator;
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
@@ -78,9 +78,6 @@ public class NativeAd implements NtvNativeAdInterface {
         if (cardView != null) {
             cardView.setBackgroundColor(Color.LTGRAY);
         }
-        if (sponsoredIndicator != null) {
-            sponsoredIndicator.setVisibility(View.VISIBLE);
-        }
         if (sponsoredTag != null) {
             sponsoredTag.setVisibility(View.VISIBLE);
         }
@@ -107,8 +104,13 @@ public class NativeAd implements NtvNativeAdInterface {
         image = v.findViewById(R.id.article_image);
         articleDateLabel = v.findViewById(R.id.article_date);
         articlePreviewLabel = v.findViewById(R.id.article_preview);
-        sponsoredIndicator = v.findViewById(R.id.sponsored_ad_indicator);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
+        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
+    }
+
+    @Override
+    public ImageView getAdChoicesImageView() {
+        return adChoicesIndicator;
     }
 }

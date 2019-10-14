@@ -15,6 +15,13 @@
         android:foreground="?android:selectableItemBackground"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/adchoices_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            tools:visibility="visible" />
+
         <FrameLayout
             android:id="@+id/video_frame"
             android:layout_width="450dp"
@@ -65,6 +72,14 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/mute_indicator"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"/>
         </FrameLayout>
 
         <TextView
@@ -106,13 +121,5 @@
             android:maxLines="4"
             tools:text="Preview text" />
 
-        <ImageView
-            android:id="@+id/sponsored_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/sponsored_indicator"
-            tools:ignore="RtlHardcoded" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

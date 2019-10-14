@@ -24,9 +24,11 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     private ImageView previewImage;
     private ImageView playButton;
     private ImageView restartButton;
+    private ImageView muteIndicator;
     private TextView titleLabel;
     private TextView authorLabel;
     private ImageView sponsoredIndicator;
+    private ImageView adChoicesIndicator;
     private ProgressBar progressBar;
     private View adContainerView;
 
@@ -51,8 +53,9 @@ public class NativeVideoAd implements NtvVideoAdInterface {
         restartButton = (ImageView) v.findViewById(R.id.restart);
         titleLabel = (TextView) v.findViewById(R.id.title);
         authorLabel = (TextView) v.findViewById(R.id.author);
-        sponsoredIndicator = (ImageView) v.findViewById(R.id.sponsored_indicator);
         progressBar = v.findViewById(R.id.video_progress_bar);
+        muteIndicator = v.findViewById(R.id.mute_indicator);
+        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
     }
 
     @Override
@@ -109,15 +112,21 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     public void displaySponsoredIndicators(boolean isSponsored) {
         if (isSponsored && layout != null) {
             layout.setBackgroundResource(R.drawable.sponsored_border);
-            sponsoredIndicator.setVisibility(View.VISIBLE);
         } else {
             if (layout != null) {
                 layout.setBackground(null);
             }
-            if (sponsoredIndicator != null) {
-                sponsoredIndicator.setVisibility(View.INVISIBLE);
-            }
         }
+    }
+
+    @Override
+    public ImageView getMuteIndicator() {
+        return muteIndicator;
+    }
+
+    @Override
+    public ImageView getAdChoicesImageView() {
+        return adChoicesIndicator;
     }
 
     @Override

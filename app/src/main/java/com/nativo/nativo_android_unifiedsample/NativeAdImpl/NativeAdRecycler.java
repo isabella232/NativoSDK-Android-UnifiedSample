@@ -3,7 +3,6 @@ package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,7 +28,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     private TextView articleDateLabel;
     private ImageView articleAuthorImage;
     private ImageView image;
-    private ImageView sponsoredIndicator;
+    private ImageView adChoicesIndicator;
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
@@ -87,9 +86,6 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
         } else if (view != null){
             view.setBackgroundColor(Color.LTGRAY);
         }
-        if (sponsoredIndicator != null) {
-            sponsoredIndicator.setVisibility(View.VISIBLE);
-        }
         if (sponsoredTag != null) {
             sponsoredTag.setVisibility(View.VISIBLE);
         }
@@ -110,6 +106,11 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     }
 
     @Override
+    public ImageView getAdChoicesImageView() {
+        return adChoicesIndicator;
+    }
+
+    @Override
     public void bindViews(View v) {
         view = v;
         layout = v.findViewById(R.id.article_layout);
@@ -119,8 +120,8 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
         image = v.findViewById(R.id.article_image);
         articleDateLabel = v.findViewById(R.id.article_date);
         articlePreviewLabel = v.findViewById(R.id.article_preview);
-        sponsoredIndicator = v.findViewById(R.id.sponsored_ad_indicator);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
+        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
     }
 }

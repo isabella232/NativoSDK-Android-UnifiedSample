@@ -12,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAd;
+import com.nativo.nativo_android_unifiedsample.NativeAdImpl.StandardDisplayAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
+import com.nativo.nativo_android_unifiedsample.NativeAdVideo.FullScreenVideoImpl;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.DfpFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.GridFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.MOAPFragment;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentViewAdapter fragmentViewAdapter = new FragmentViewAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(fragmentViewAdapter);
+        viewPager.setOffscreenPageLimit(0);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         init();
@@ -44,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
         NativoSDK.getInstance().registerNativeAd(new NativeAd());
         NativoSDK.getInstance().registerLandingPage(new NativeLandingPage());
         NativoSDK.getInstance().registerVideoAd(new NativeVideoAd());
-        NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
+        // Can use the default implementation provided by the SDK
+//        NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
+        NativoSDK.getInstance().registerFullscreenVideo(new FullScreenVideoImpl());
+        NativoSDK.getInstance().registerStandardDisplayAd(new StandardDisplayAd());
 //        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
         NativoSDK.getInstance().enableDevLogs();
     }
