@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ViewFragment.MOAPFragment">
 
+    <Button
+        android:id="@+id/moap_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/moap_editText"
+        android:text="Load URL" />
+
+    <EditText
+        android:id="@+id/moap_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="48dp"
+        android:layout_y="23dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Enter URL" />
+
     <WebView
         android:id="@+id/moap_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/moap_editText">
 
-</FrameLayout>
+    </WebView>
+
+</RelativeLayout>

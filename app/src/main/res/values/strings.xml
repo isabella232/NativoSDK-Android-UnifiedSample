@@ -25,4 +25,6 @@
 
     <!--DFP ad unit id-->
     <string name="ad_unit_id">/416881364/AdUnitSDK</string>
+    <string name="goForward">goForward</string>
+    <string name="goBack">goBack</string>
 </resources>

@@ -24,8 +24,6 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewVideoFragm
 import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
-import net.nativo.sdk.ntvcore.NtvAdData;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 //        NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
         NativoSDK.getInstance().registerFullscreenVideo(new FullScreenVideoImpl());
         NativoSDK.getInstance().registerStandardDisplayAd(new StandardDisplayAd());
-//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
+//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
         NativoSDK.getInstance().enableDevLogs();
     }
 
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new RecyclerViewFragment();
+                    return new MOAPFragment();
                 case 1:
                     return new GridFragment();
                 case 2:
@@ -96,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 case 5:
                     return new DfpFragment();
                 case 6:
-                    return new MOAPFragment();
+                    return new RecyclerViewFragment();
+
             }
             return null;
         }
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getResources().getText(R.string.recycle_list_tab);
+                    return getResources().getText(R.string.moap);
                 case 1:
                     return getResources().getText(R.string.grid_tab);
                 case 2:
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 case 5:
                     return getResources().getText(R.string.dfp);
                 case 6:
-                    return getResources().getText(R.string.moap);
+                    return getResources().getText(R.string.recycle_tab);
             }
             return null;
         }

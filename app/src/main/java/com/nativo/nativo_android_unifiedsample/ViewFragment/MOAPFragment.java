@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.nativo.nativo_android_unifiedsample.R;
 
@@ -21,6 +26,8 @@ import static com.nativo.nativo_android_unifiedsample.util.AppConstants.MOAP_SEC
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.PUBLISHER_URL;
 
 public class MOAPFragment extends Fragment {
+
+    WebView mWebView;
 
     public MOAPFragment() {
         // Required empty public constructor
@@ -36,11 +43,29 @@ public class MOAPFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        WebView mWebView = view.findViewById(R.id.moap_webview);
+        setupWebView(view);
+        EditText editText = view.findViewById(R.id.moap_editText);
+        Button button = view.findViewById(R.id.moap_button);
+        button.setOnClickListener(v -> {
+            String url = editText.getText().toString();
+            boolean validUrl = URLUtil.isValidUrl(url);
+            if (validUrl) {
+                mWebView.loadUrl(url);
+            } else {
+                Toast.makeText(getContext(),"Invalid Url LOAD URL not called, ensure HTTP/S prefix", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setupWebView(@NonNull View view) {
+        mWebView = view.findViewById(R.id.moap_webview);
         WebView.setWebContentsDebuggingEnabled(true);
         mWebView.clearCache(false);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.setWebChromeClient(new NativoChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -48,6 +73,25 @@ public class MOAPFragment extends Fragment {
                 NativoSDK.getInstance().placeAdInWebView(mWebView, MOAP_SECTION_URL);
             }
         });
+
+        mWebView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //This is the filter
+                if (event.getAction() != KeyEvent.ACTION_DOWN)
+                    return true;
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    } else {
+                        getActivity().onBackPressed();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
         mWebView.loadUrl(PUBLISHER_URL);
     }
 
