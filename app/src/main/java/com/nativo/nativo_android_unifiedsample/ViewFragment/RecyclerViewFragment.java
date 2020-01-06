@@ -35,7 +35,6 @@ public class RecyclerViewFragment extends Fragment {
     // calling clear ads in section when your app transitions to new activity or fragment
     @Override
     public void onPause() {
-        NativoSDK.getInstance().clearAdsInSection(SECTION_URL, recyclerView);
         super.onPause();
     }
 }
