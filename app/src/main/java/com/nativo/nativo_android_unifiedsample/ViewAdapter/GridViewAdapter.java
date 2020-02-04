@@ -17,7 +17,8 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
+import net.nativo.sdk.ntvconstant.NativoAdType;
+import net.nativo.sdk.ntvconstant.NativoAdType;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
@@ -64,12 +65,12 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
 
-        String adType = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, gridView, i);
-        if (adType.equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
+        NativoAdType adType = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, gridView, i);
+        if (adType.equals(NativoAdType.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (adType.equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
+        } else if (adType.equals(NativoAdType.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-        } else if (adType.equals(NtvAdTypeConstants.AD_TYPE_STANDARD_DISPLAY)){
+        } else if (adType.equals(NativoAdType.AD_TYPE_STANDARD_DISPLAY)){
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
         }
 
