@@ -146,12 +146,12 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
         notifyDataSetChanged();
     }
 
     @Override
-    public void onFail(String s, int index) {
+    public void onFail(String s) {
         notifyDataSetChanged();
     }
 

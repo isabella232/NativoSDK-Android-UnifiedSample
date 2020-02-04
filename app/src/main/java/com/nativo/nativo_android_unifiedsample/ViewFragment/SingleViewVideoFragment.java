@@ -156,12 +156,12 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     }
 
     @Override
-    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
 
     }
 
     @Override
-    public void onFail(String s, int index) {
+    public void onFail(String s) {
 
     }
 }

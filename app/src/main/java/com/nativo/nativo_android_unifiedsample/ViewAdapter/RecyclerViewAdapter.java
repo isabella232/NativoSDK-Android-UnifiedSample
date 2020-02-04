@@ -37,9 +37,11 @@ import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTI
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvSectionAdapter {
 
+    private static String TAG = RecyclerViewAdapter.class.getName();
     private Context context;
     private RecyclerView recyclerView;
     List<Integer> integerList = new ArrayList<>();
+
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
@@ -167,17 +169,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     }
 
     @Override
-    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
-
-        notifyItemChanged(index);
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+        Log.d(TAG, "onReceiveAd: track called");
+        notifyDataSetChanged();
     }
 
     @Override
-    public void onFail(String s, int index) {
+    public void onFail(String s) {
         // protect against removing non ad views
-        integerList.remove(index);
-        notifyItemRemoved(index);
-        notifyItemChanged(index);
+        notifyDataSetChanged();
     }
 
     @Override

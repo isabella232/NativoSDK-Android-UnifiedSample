@@ -26,6 +26,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     private TextView titleLabel;
     private TextView authorNameLabel;
     private View adContainerView;
+    int boapIndex = 0;
 
     @Override
     public WebView getContentWebView() {
@@ -75,7 +76,8 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     @Override
     public void contentWebViewOnPageFinished() {
         ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, viewGroup, new Random().nextInt(), this, null);
+        boapIndex = new Random().nextInt();
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, viewGroup, boapIndex, this, null);
     }
 
     @Override
@@ -127,8 +129,8 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     }
 
     @Override
-    public void onReceiveAd(String s, int i, NtvAdData ntvAdData) {
-        tryPlaceAd(i);
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+        tryPlaceAd(boapIndex);
     }
 
     private void tryPlaceAd(int i) {
@@ -138,7 +140,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     }
 
     @Override
-    public void onFail(String s, int i) {
-        tryPlaceAd(i);
+    public void onFail(String s) {
+        tryPlaceAd(boapIndex);
     }
 }
