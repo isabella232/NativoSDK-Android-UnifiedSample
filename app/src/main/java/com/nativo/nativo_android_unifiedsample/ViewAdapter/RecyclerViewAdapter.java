@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
 
+import net.nativo.sdk.NativoAPI;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
@@ -39,6 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     private Context context;
     private RecyclerView recyclerView;
+    NativoAPI nativoAPI = new NativoAPI();
     List<Integer> integerList = new ArrayList<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
@@ -75,13 +76,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         View view = listViewHolder.getContainer();
         if (listViewHolder instanceof NativeAdRecycler ||
                 listViewHolder instanceof NativeVideoAdRecycler || listViewHolder instanceof StandardDisplayAdRecycler) {
-            ad = NativoSDK.getInstance().placeAdInView(view,
+            ad = nativoAPI.placeAdInView(view,
                     recyclerView, SECTION_URL, i, this, null);
         }
 
         if (!ad) {
             bindView(listViewHolder.getContainer(), i);
-            NativoSDK.getInstance().placeAdInView(view, recyclerView,
+            nativoAPI.placeAdInView(view, recyclerView,
                     SECTION_URL, i, this, null);
         }
     }
@@ -89,7 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public int getItemViewType(int position) {
-        String s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, position);
+        String s = nativoAPI.getAdTypeForIndex(SECTION_URL, recyclerView, position);
         switch (s) {
             case NtvAdTypeConstants.AD_TYPE_STANDARD_DISPLAY:
                 return 3;
@@ -174,9 +175,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public void onFail(String s, int index) {
-        // protect against removing non ad views
-        integerList.remove(index);
-        notifyItemRemoved(index);
         notifyItemChanged(index);
     }
 

@@ -23,11 +23,11 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewVideoFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 
-import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
+import net.nativo.sdk.NativoAPI;
 import net.nativo.sdk.ntvcore.NtvAdData;
 
 public class MainActivity extends AppCompatActivity {
+    NativoAPI nativoAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,34 +43,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        NativoSDK.getInstance().init(this);
-        NativoSDK.getInstance().registerNativeAd(new NativeAd());
-        NativoSDK.getInstance().registerLandingPage(new NativeLandingPage());
-        NativoSDK.getInstance().registerVideoAd(new NativeVideoAd());
+        nativoAPI = new NativoAPI();
+        nativoAPI.init(this);
+        nativoAPI.registerNativeAd(new NativeAd());
+        nativoAPI.registerLandingPage(new NativeLandingPage());
+        nativoAPI.registerVideoAd(new NativeVideoAd());
         // Can use the default implementation provided by the SDK
-//        NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
-        NativoSDK.getInstance().registerFullscreenVideo(new FullScreenVideoImpl());
-        NativoSDK.getInstance().registerStandardDisplayAd(new StandardDisplayAd());
-//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
-        NativoSDK.getInstance().enableDevLogs();
+//        nativoAPI.registerFullscreenVideo(new DefaultFullscreenVideo());
+        nativoAPI.registerFullscreenVideo(new FullScreenVideoImpl());
+        nativoAPI.registerStandardDisplayAd(new StandardDisplayAd());
+        nativoAPI.enableTestAdvertisements(NtvAdData.NtvAdType.NO_FILL);
+        nativoAPI.enableDevLogs();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        NativoSDK.getInstance().onConfigurationChanged(newConfig);
+        nativoAPI.onConfigurationChanged(newConfig);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        NativoSDK.getInstance().onPause();
+        nativoAPI.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        NativoSDK.getInstance().onResume();
+        nativoAPI.onResume();
     }
 
     private class FragmentViewAdapter extends FragmentPagerAdapter {
