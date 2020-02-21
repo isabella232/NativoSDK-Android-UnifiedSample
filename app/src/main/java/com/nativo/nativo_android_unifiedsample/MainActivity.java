@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //        nativoAPI.registerFullscreenVideo(new DefaultFullscreenVideo());
         nativoAPI.registerFullscreenVideo(new FullScreenVideoImpl());
         nativoAPI.registerStandardDisplayAd(new StandardDisplayAd());
-        nativoAPI.enableTestAdvertisements(NtvAdData.NtvAdType.NO_FILL);
+//        nativoAPI.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
         nativoAPI.enableDevLogs();
     }
 
