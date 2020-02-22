@@ -19,7 +19,6 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.NativoAPI;
-import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;

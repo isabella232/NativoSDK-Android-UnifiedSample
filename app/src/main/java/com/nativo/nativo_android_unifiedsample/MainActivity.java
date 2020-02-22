@@ -48,11 +48,12 @@ public class MainActivity extends AppCompatActivity {
         nativoAPI.registerNativeAd(new NativeAd());
         nativoAPI.registerLandingPage(new NativeLandingPage());
         nativoAPI.registerVideoAd(new NativeVideoAd());
-        // Can use the default implementation provided by the SDK
-//        nativoAPI.registerFullscreenVideo(new DefaultFullscreenVideo());
+//      Can use the default implementation provided by the SDK
+//      nativoAPI.registerFullscreenVideo(new DefaultFullscreenVideo());
         nativoAPI.registerFullscreenVideo(new FullScreenVideoImpl());
         nativoAPI.registerStandardDisplayAd(new StandardDisplayAd());
-//        nativoAPI.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
+//      To request specific ad types
+//      nativoAPI.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
         nativoAPI.enableDevLogs();
     }
 
