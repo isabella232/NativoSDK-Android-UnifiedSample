@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -199,4 +200,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         return position;
     }
 
+    @Override
+    public void onViewRecycled(@NonNull RecyclerListViewHolder holder) {
+        if (holder instanceof NativeVideoAdRecycler) {
+            TextureView textureView = ((NativeVideoAdRecycler) holder).getTextureView();
+            ((ViewGroup) holder.itemView).removeView(textureView);
+
+        }
+        super.onViewRecycled(holder);
+    }
 }
