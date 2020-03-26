@@ -98,7 +98,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
         @Override
         public void onClick(View view) {
             NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) getView(),0, viewFragment, null);
-            Log.d(getClass().getName(), NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL,(ViewGroup) getView(), 0));
+            Log.d(getClass().getName(), NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL,(ViewGroup) getView(), 0).toString());
             if (!getAd()) {
                 bindView(getView(), 0);
             }
@@ -148,12 +148,12 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
 
     }
 
     @Override
-    public void onFail(String s, int index) {
+    public void onFail(String s) {
 
     }
 }

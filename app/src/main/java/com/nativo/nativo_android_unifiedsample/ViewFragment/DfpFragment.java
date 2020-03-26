@@ -135,14 +135,14 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, int i, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
         Log.d("DFP", "Ad loaded");
         nativoView.setVisibility(View.VISIBLE);
-        NativoSDK.getInstance().placeAdInView(nativoView, parentView, DFP_SECTION_URL, i, fragmentAdapter, null);
+        NativoSDK.getInstance().placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
     }
 
     @Override
-    public void onFail(String s, int i) {
+    public void onFail(String s) {
         Log.d("DFP", "Ad load failed");
     }
 

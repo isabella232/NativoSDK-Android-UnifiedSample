@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,25 +22,31 @@ import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolde
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
+import net.nativo.sdk.ntvconstant.NativoAdType;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
+import static net.nativo.sdk.ntvconstant.NativoAdType.*;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvSectionAdapter {
 
+    private static String TAG = RecyclerViewAdapter.class.getName();
     private Context context;
     private RecyclerView recyclerView;
     List<Integer> integerList = new ArrayList<>();
+    Set<Integer> adsRequestIndex = new HashSet<>();
+
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
@@ -84,20 +91,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
             NativoSDK.getInstance().placeAdInView(view, recyclerView,
                     SECTION_URL, i, this, null);
         }
+        if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
+            adsRequestIndex.add(i);
+        }
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        String s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, position);
+        NativoAdType s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, position);
         switch (s) {
-            case NtvAdTypeConstants.AD_TYPE_STANDARD_DISPLAY:
+            case AD_TYPE_STANDARD_DISPLAY:
                 return 3;
-            case NtvAdTypeConstants.AD_TYPE_VIDEO:
+            case AD_TYPE_VIDEO:
                 return 2;
-            case NtvAdTypeConstants.AD_TYPE_NATIVE:
+            case AD_TYPE_NATIVE:
                 return 1;
-            case NtvAdTypeConstants.AD_TYPE_NONE:
+            case AD_TYPE_NONE:
                 return 0;
             default:
                 return -1;
@@ -106,20 +116,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     private void bindView(View view, int i) {
         if (view != null) {
-            if (((ImageView) view.findViewById(R.id.article_image)) != null) {
+            if (view.findViewById(R.id.article_image) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
             }
-            if (((ImageView) view.findViewById(R.id.sponsored_ad_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_ad_indicator)).setVisibility(View.INVISIBLE);
+            if (view.findViewById(R.id.sponsored_ad_indicator) != null) {
+                view.findViewById(R.id.sponsored_ad_indicator).setVisibility(View.INVISIBLE);
             }
-            if (((TextView) view.findViewById(R.id.article_author)) != null) {
+            if (view.findViewById(R.id.article_author) != null) {
                 ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
             }
-            if (((TextView) view.findViewById(R.id.article_title)) != null) {
+            if (view.findViewById(R.id.article_title) != null) {
                 ((TextView) view.findViewById(R.id.article_title)).setText(R.string.sample_title);
             }
-            if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
-                ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
+            if (view.findViewById(R.id.sponsored_tag) != null) {
+                view.findViewById(R.id.sponsored_tag).setVisibility(View.INVISIBLE);
             }
             view.setOnClickListener(onClickListener);
         }
@@ -167,17 +177,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     }
 
     @Override
-    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
-
-        notifyItemChanged(index);
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+        notifyDataSetChanged();
     }
 
     @Override
-    public void onFail(String s, int index) {
+    public void onFail(String s) {
         // protect against removing non ad views
-        integerList.remove(index);
-        notifyItemRemoved(index);
-        notifyItemChanged(index);
+        for (Integer index : adsRequestIndex) {
+            NativoAdType adTypeForIndex = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, index);
+            if (AD_TYPE_NOFILL.equals(adTypeForIndex)) {
+                integerList.remove(index);
+                notifyItemRemoved(index);
+                notifyItemChanged(index);
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -185,4 +200,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         return position;
     }
 
+    @Override
+    public void onViewRecycled(@NonNull RecyclerListViewHolder holder) {
+        if (holder instanceof NativeVideoAdRecycler) {
+            TextureView textureView = ((NativeVideoAdRecycler) holder).getTextureView();
+            ((ViewGroup) holder.itemView).removeView(textureView);
+
+        }
+        super.onViewRecycled(holder);
+    }
 }

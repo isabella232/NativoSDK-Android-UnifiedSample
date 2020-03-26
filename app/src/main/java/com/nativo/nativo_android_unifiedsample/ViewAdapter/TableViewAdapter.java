@@ -15,7 +15,7 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
+import net.nativo.sdk.ntvconstant.NativoAdType;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
@@ -54,9 +54,9 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
 
@@ -131,12 +131,12 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, NtvAdData ntvAdData) {
 
     }
 
     @Override
-    public void onFail(String s, int index) {
+    public void onFail(String s) {
 
     }
 
