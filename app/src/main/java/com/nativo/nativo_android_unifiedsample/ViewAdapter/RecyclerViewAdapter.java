@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAdRecycler;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAdRecycler;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.StandardDisplayAdRecycler;
-import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;

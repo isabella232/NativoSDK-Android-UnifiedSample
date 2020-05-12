@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
-import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.ViewAdapter.TableViewAdapter;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 

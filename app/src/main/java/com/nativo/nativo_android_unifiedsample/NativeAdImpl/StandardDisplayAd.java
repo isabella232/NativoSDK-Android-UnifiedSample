@@ -5,7 +5,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.ntvadtype.display.NtvStandardDisplayInterface;
 

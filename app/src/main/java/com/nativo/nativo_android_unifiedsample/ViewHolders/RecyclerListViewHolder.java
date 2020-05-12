@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.sampleapp.R;
+
 
 public class RecyclerListViewHolder extends RecyclerView.ViewHolder {
     View container;

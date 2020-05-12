@@ -1,5 +1,8 @@
 package com.nativo.nativo_android_unifiedsample;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,10 +25,16 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.RecyclerViewFragment
 import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewVideoFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
 import net.nativo.sdk.ntvcore.NtvAdData;
+
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_GDPR_CONSENT;
+import static net.nativo.sdk.ntvconstant.NtvConstants.CCPA_SHARED_PREFERENCE_STRING;
+import static net.nativo.sdk.ntvconstant.NtvConstants.GDPR_SHARED_PREFERENCE_STRING;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +48,16 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(0);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        setPrivacyAndTransparencyKeys();
         init();
+    }
+
+    private void setPrivacyAndTransparencyKeys() {
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(GDPR_SHARED_PREFERENCE_STRING, SAMPLE_GDPR_CONSENT);
+        editor.putString(CCPA_SHARED_PREFERENCE_STRING, SAMPLE_CCPA_VALID_CONSENT);
+        editor.apply();
     }
 
     private void init() {

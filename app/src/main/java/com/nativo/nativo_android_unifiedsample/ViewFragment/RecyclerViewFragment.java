@@ -8,12 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.ViewAdapter.RecyclerViewAdapter;
-
-import net.nativo.sdk.NativoSDK;
-
-import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+import com.nativo.sampleapp.R;
 
 public class RecyclerViewFragment extends Fragment {
 

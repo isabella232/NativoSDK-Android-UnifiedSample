@@ -13,7 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
-import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 

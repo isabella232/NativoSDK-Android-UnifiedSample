@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
 

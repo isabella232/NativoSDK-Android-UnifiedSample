@@ -9,4 +9,10 @@ public class AppConstants {
     public static final String SP_CAMPAIGN_ID = "CAMPAIGN_ID";
     public static final String SP_SECTION_URL = "SECTION_URL";
     public static final String SP_CONTAINER_HASH = "CONTAINER_HASH";
+
+    //
+    public static final String SAMPLE_GDPR_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgACBZYA";
+    public static final String SAMPLE_CCPA_VALID_CONSENT = "1YNY";
+    public static final String SAMPLE_CCPA_INVALID_CONSENT = "1YYY";
+
 }
