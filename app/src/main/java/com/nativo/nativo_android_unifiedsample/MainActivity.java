@@ -1,17 +1,16 @@
 package com.nativo.nativo_android_unifiedsample;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAd;
@@ -28,8 +27,6 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
-import net.nativo.sdk.ntvcore.NtvAdData;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_GDPR_CONSENT;

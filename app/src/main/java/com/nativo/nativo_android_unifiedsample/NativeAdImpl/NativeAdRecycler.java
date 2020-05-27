@@ -2,7 +2,7 @@ package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
+import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
