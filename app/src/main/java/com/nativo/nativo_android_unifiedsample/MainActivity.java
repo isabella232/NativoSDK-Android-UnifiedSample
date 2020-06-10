@@ -191,7 +191,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void removePrivacyAndTransparencyKeys() {
         SharedPreferences.Editor editor = getEditor();
-        editor.clear();
+        editor.remove(GDPR_SHARED_PREFERENCE_STRING);
+        editor.remove(CCPA_SHARED_PREFERENCE_STRING);
         editor.apply();
     }
 }
