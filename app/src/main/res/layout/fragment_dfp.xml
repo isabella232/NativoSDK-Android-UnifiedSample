@@ -12,6 +12,7 @@
         tools:context=".ViewFragment.DfpFragment">
 
         <include layout="@layout/native_article" />
+        <include layout="@layout/video_layout" />
 
         <Button
             android:id="@+id/load_ad"

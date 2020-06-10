@@ -12,6 +12,8 @@ public class AppConstants {
 
     //
     public static final String SAMPLE_GDPR_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgACBZYA";
+    //changed last few chars of valid string
+    public static final String SAMPLE_GDPR_INVALID_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgA";
     public static final String SAMPLE_CCPA_VALID_CONSENT = "1YNY";
     public static final String SAMPLE_CCPA_INVALID_CONSENT = "1YYY";
 

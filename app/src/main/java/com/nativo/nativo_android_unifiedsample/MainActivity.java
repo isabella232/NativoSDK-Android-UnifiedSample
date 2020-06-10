@@ -1,17 +1,23 @@
 package com.nativo.nativo_android_unifiedsample;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAd;
@@ -28,11 +34,11 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
-import net.nativo.sdk.ntvcore.NtvAdData;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_CCPA_INVALID_CONSENT;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_GDPR_CONSENT;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SAMPLE_GDPR_INVALID_CONSENT;
 import static net.nativo.sdk.ntvconstant.NtvConstants.CCPA_SHARED_PREFERENCE_STRING;
 import static net.nativo.sdk.ntvconstant.NtvConstants.GDPR_SHARED_PREFERENCE_STRING;
 
@@ -48,13 +54,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(0);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        setPrivacyAndTransparencyKeys();
         init();
     }
 
     private void setPrivacyAndTransparencyKeys() {
-        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getEditor();
         editor.putString(GDPR_SHARED_PREFERENCE_STRING, SAMPLE_GDPR_CONSENT);
         editor.putString(CCPA_SHARED_PREFERENCE_STRING, SAMPLE_CCPA_VALID_CONSENT);
         editor.apply();
@@ -145,5 +149,49 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.app_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.yes:
+                setPrivacyAndTransparencyKeys();
+                return true;
+            case R.id.no:
+                removePrivacyAndTransparencyKeys();
+                return true;
+            case R.id.invalid:
+                invalidPrivacyAndTransparencyKeys();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void invalidPrivacyAndTransparencyKeys() {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putString(GDPR_SHARED_PREFERENCE_STRING, SAMPLE_GDPR_INVALID_CONSENT);
+        editor.putString(CCPA_SHARED_PREFERENCE_STRING, SAMPLE_CCPA_INVALID_CONSENT);
+        editor.apply();
+
+    }
+
+    private SharedPreferences.Editor getEditor() {
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        return sharedPreferences.edit();
+    }
+
+    private void removePrivacyAndTransparencyKeys() {
+        SharedPreferences.Editor editor = getEditor();
+        editor.clear();
+        editor.apply();
     }
 }

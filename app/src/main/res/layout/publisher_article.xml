@@ -10,7 +10,7 @@
     android:padding="16dp"
     tools:background="@drawable/sponsored_border">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/article_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -57,5 +57,5 @@
                 tools:text="Author" />
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

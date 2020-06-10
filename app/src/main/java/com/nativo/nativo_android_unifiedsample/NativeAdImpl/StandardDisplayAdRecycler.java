@@ -1,8 +1,8 @@
 package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
