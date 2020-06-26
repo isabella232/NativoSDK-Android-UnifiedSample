@@ -1,7 +1,7 @@
 package com.nativo.nativo_android_unifiedsample.ViewFragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
 
-import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.ViewAdapter.TableViewAdapter;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 

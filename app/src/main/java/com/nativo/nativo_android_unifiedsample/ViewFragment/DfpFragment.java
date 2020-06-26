@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +19,8 @@ import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
-import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
@@ -46,6 +46,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     String mMesssage;
     DfpFragment fragmentAdapter;
     View nativoView;
+    View nativoVideoView;
     ViewGroup parentView;
 
     public DfpFragment() {
@@ -67,7 +68,9 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         super.onViewCreated(view, savedInstanceState);
         parentView = (ViewGroup) view;
         nativoView = view.findViewById(R.id.article_constraint_layout);
-        nativoView.setVisibility(View.INVISIBLE);
+        nativoView.setVisibility(View.GONE);
+        nativoVideoView = view.findViewById(R.id.video_constraint_layout);
+        nativoVideoView.setVisibility(View.GONE);
         NativoSDK.getInstance().enableDFPRequestsWithVersion("17.0.0");
         View loadAd = view.findViewById(R.id.load_ad);
         loadAd.setOnClickListener(loadClick);
@@ -137,8 +140,13 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData) {
         Log.d("DFP", "Ad loaded");
-        nativoView.setVisibility(View.VISIBLE);
-        NativoSDK.getInstance().placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+        if (ntvAdData.getAdType() == NtvAdData.NtvAdType.NATIVE || ntvAdData.getAdType() == NtvAdData.NtvAdType.CLICK_OUT) {
+            nativoView.setVisibility(View.VISIBLE);
+            NativoSDK.getInstance().placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+        } else if (ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO) {
+            nativoVideoView.setVisibility(View.VISIBLE);
+            NativoSDK.getInstance().placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+        }
     }
 
     @Override

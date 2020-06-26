@@ -25,4 +25,7 @@
 
     <!--DFP ad unit id-->
     <string name="ad_unit_id">/416881364/AdUnitSDK</string>
+    <string name="give_consent">Give Consent</string>
+    <string name="remove_consent">Remove Consent</string>
+    <string name="invalid_consent">Invalid Consent</string>
 </resources>

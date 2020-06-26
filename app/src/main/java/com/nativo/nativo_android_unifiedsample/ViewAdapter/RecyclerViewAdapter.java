@@ -3,9 +3,9 @@ package com.nativo.nativo_android_unifiedsample.ViewAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAdRecycler;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAdRecycler;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.StandardDisplayAdRecycler;
-import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;

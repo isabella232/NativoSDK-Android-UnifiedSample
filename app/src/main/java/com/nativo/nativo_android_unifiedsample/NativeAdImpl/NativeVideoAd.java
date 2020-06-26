@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
 import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;

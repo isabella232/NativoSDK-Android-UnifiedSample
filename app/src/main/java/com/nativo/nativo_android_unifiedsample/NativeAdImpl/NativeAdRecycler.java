@@ -2,15 +2,15 @@ package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.CardView;
+import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
 

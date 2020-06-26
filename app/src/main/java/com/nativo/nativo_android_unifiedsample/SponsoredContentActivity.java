@@ -1,17 +1,15 @@
 package com.nativo.nativo_android_unifiedsample;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
+import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 
-import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
