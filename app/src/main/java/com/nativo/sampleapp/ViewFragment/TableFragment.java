@@ -32,9 +32,6 @@ public class TableFragment extends Fragment {
         listView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
         tableViewAdapter = new TableViewAdapter(listView);
         listView.setAdapter(tableViewAdapter);
-        view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
-        view.findViewById(R.id.show_ad).setOnClickListener(showAd);
-        view.findViewById(R.id.hide_ad).setOnClickListener(hideAd);
         return view;
     }
 

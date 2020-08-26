@@ -35,7 +35,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 20;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i==3;
+        return i==3 || i==10;
     }
 
     @Override
