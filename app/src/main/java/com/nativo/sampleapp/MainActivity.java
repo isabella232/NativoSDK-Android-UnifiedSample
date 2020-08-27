@@ -30,7 +30,7 @@ import com.nativo.sampleapp.ViewFragment.MOAPFragment;
 import com.nativo.sampleapp.ViewFragment.RecyclerViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewVideoFragment;
-import com.nativo.sampleapp.ViewFragment.TableFragment;
+import com.nativo.sampleapp.ViewFragment.ListViewFragment;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvcore.NtvAdData;
@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
 //        NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
         NativoSDK.getInstance().registerFullscreenVideo(new FullScreenVideoImpl());
         NativoSDK.getInstance().registerStandardDisplayAd(new StandardDisplayAd());
-//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
+        // Developers can modify to force specific ad types
+//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
         NativoSDK.getInstance().enableDevLogs();
     }
 
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new GridFragment();
                 case 2:
-                    return new TableFragment();
+                    return new ListViewFragment();
                 case 3:
                     return new SingleViewFragment();
                 case 4:

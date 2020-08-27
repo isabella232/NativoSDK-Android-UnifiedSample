@@ -15,22 +15,22 @@
         android:layout_weight="1"
         android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/load_ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/load_ad" />
+<!--    <Button-->
+<!--        android:id="@+id/load_ad"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/load_ad" />-->
 
-    <Button
-        android:id="@+id/hide_ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hide_ad" />
+<!--    <Button-->
+<!--        android:id="@+id/hide_ad"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/hide_ad" />-->
 
-    <Button
-        android:id="@+id/show_ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_ad" />
+<!--    <Button-->
+<!--        android:id="@+id/show_ad"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/show_ad" />-->
 
 </LinearLayout>

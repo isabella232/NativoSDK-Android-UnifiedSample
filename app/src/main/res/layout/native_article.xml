@@ -106,7 +106,7 @@
             <ImageView
                 android:id="@+id/article_author_image"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="20dp"
                 android:layout_below="@id/article_preview"
                 android:layout_margin="2dp"
                 android:layout_toEndOf="@id/article_author"
