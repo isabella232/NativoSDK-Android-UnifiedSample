@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
@@ -25,11 +25,16 @@ import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
 import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
-public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
+/**
+ * Example of Nativo SDK implemented using ListView
+ * Ads are placed according to rule in link{@code shouldPlaceAdAtIndex()}.
+ * If an ad is not placed(eg no fill scenario) the cell is marked with red
+ */
+public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     private ViewGroup listView;
 
-    public TableViewAdapter(ViewGroup parent) {
+    public ListViewAdapter(ViewGroup parent) {
         this.listView = parent;
     }
 
@@ -50,7 +55,6 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, listView, i, this, null);
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
@@ -104,7 +108,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i==3 || i==10;
+        return i % 3 == 0;
     }
 
     @Override
@@ -132,12 +136,12 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData) {
-
+        notifyDataSetChanged();
     }
 
     @Override
     public void onFail(String s) {
-
+        notifyDataSetChanged();
     }
 
 }
