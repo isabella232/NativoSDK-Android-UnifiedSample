@@ -3,9 +3,6 @@ package com.nativo.sampleapp.ViewAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
@@ -13,12 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler;
+import com.nativo.sampleapp.NativeAdImpl.NativeStoryAdRecycler;
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler;
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAdRecycler;
+import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
-import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
@@ -36,7 +37,7 @@ import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
 import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
-import static net.nativo.sdk.ntvconstant.NativoAdType.*;
+import static net.nativo.sdk.ntvconstant.NativoAdType.AD_TYPE_NOFILL;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvSectionAdapter {
@@ -69,6 +70,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         } else if (i == 3) {
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
             viewHolder = new StandardDisplayAdRecycler(adViewTry, viewGroup);
+        } else if (i == 4) {
+            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.story_layout, viewGroup, false);
+            viewHolder = new NativeStoryAdRecycler(adViewTry, viewGroup);
         } else {
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
             viewHolder = new RecyclerListViewHolder(adViewTry, viewGroup);
@@ -101,6 +105,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     public int getItemViewType(int position) {
         NativoAdType s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, position);
         switch (s) {
+            case AD_TYPE_STORY:
+                return 4;
             case AD_TYPE_STANDARD_DISPLAY:
                 return 3;
             case AD_TYPE_VIDEO:

@@ -1,9 +1,10 @@
 package com.nativo.sampleapp;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
 
 import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage;
 
@@ -15,12 +16,7 @@ import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 public class SponsoredContentActivity extends AppCompatActivity {
 
-    String sectionUrl;
-    int campaignId;
-    Integer containerHash;
     boolean withView = true;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
