@@ -1,6 +1,7 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
+import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
 
 import java.text.SimpleDateFormat;
@@ -34,7 +36,19 @@ public class NativeStoryAdRecycler extends RecyclerListViewHolder implements Ntv
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
+    private ImageView shareButton;
 
+    @Override
+    public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
+        shareButton = (ImageView) view.findViewById(R.id.share_icon);
+        shareButton.setOnClickListener(v -> {
+            v.getContext().startActivity(Intent.createChooser(
+                    new Intent(Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
+            NativoSDK.getInstance().trackShareAction(trackUrl);
+        });
+    }
     public NativeStoryAdRecycler(@NonNull View container, ViewGroup viewGroup) {
         super(container, viewGroup);
     }
@@ -100,7 +114,7 @@ public class NativeStoryAdRecycler extends RecyclerListViewHolder implements Ntv
 
     @Override
     public int getLayout(Context context) {
-        return R.layout.story_layout;
+        return R.layout.native_article;
     }
 
     @Override
@@ -113,7 +127,7 @@ public class NativeStoryAdRecycler extends RecyclerListViewHolder implements Ntv
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
         articleDateLabel = v.findViewById(R.id.article_date);
-        articlePreviewLabel = v.findViewById(R.id.article_preview);
+        articlePreviewLabel = v.findViewById(R.id.article_description);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);

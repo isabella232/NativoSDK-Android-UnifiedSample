@@ -1,6 +1,7 @@
 package com.nativo.sampleapp.NativeAdLandingImpl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -26,7 +27,22 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     private TextView titleLabel;
     private TextView authorNameLabel;
     private View adContainerView;
-    int boapIndex = 0;
+    private ImageView articleAuthorImage;
+    private int boapIndex = 0;
+
+    private ImageView shareButton;
+
+    @Override
+    public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
+        shareButton = (ImageView) adContainerView.findViewById(R.id.share_icon);
+        shareButton.setOnClickListener(v -> {
+            v.getContext().startActivity(Intent.createChooser(
+                    new Intent(Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
+            NativoSDK.getInstance().trackShareAction(trackUrl);
+        });
+    }
 
     @Override
     public WebView getContentWebView() {
@@ -45,7 +61,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public ImageView getAuthorImageView() {
-        return null;
+        return articleAuthorImage;
     }
 
     @Override
@@ -95,7 +111,9 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
         adContainerView = v;
         webView = v.findViewById(R.id.web_view);
         titleLabel = v.findViewById(R.id.title_label);
-        authorNameLabel = v.findViewById(R.id.author_label);
+        authorNameLabel = v.findViewById(R.id.article_author);
+        shareButton = v.findViewById(R.id.share_icon);
+        articleAuthorImage = v.findViewById(R.id.article_author_image);
     }
 
     @Override

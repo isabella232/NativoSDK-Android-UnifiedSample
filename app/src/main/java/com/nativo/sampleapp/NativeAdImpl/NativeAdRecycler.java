@@ -1,8 +1,10 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import androidx.cardview.widget.CardView;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 import com.nativo.sampleapp.R;
 
+import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +35,19 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
+    private ImageView shareButton;
 
+    @Override
+    public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
+        shareButton = (ImageView) view.findViewById(R.id.share_icon);
+        shareButton.setOnClickListener(v -> {
+            v.getContext().startActivity(Intent.createChooser(
+                    new Intent(Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
+            NativoSDK.getInstance().trackShareAction(trackUrl);
+        });
+    }
 
     @Override
     public TextView getTitleLabel() {
@@ -119,7 +134,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
         articleDateLabel = v.findViewById(R.id.article_date);
-        articlePreviewLabel = v.findViewById(R.id.article_preview);
+        articlePreviewLabel = v.findViewById(R.id.article_description);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);

@@ -3,6 +3,7 @@ package com.nativo.sampleapp.ViewAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
@@ -24,8 +25,12 @@ import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvconstant.NativoAdType;
+import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -71,7 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
             viewHolder = new StandardDisplayAdRecycler(adViewTry, viewGroup);
         } else if (i == 4) {
-            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.story_layout, viewGroup, false);
+            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             viewHolder = new NativeStoryAdRecycler(adViewTry, viewGroup);
         } else {
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
@@ -134,6 +139,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
             if (view.findViewById(R.id.article_title) != null) {
                 ((TextView) view.findViewById(R.id.article_title)).setText(R.string.sample_title);
             }
+            if (view.findViewById(R.id.article_description) != null) {
+                ((TextView) view.findViewById(R.id.article_description)).setText(R.string.sample_description);
+            }
             if (view.findViewById(R.id.sponsored_tag) != null) {
                 view.findViewById(R.id.sponsored_tag).setVisibility(View.INVISIBLE);
             }
@@ -185,6 +193,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData) {
         notifyDataSetChanged();
+        JSONObject adContent = ntvAdData.getRawContent();
+        try {
+            String shareUrl = adContent.getString("permanentLink");
+            Log.e(TAG, "onReceiveAd: " + shareUrl );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

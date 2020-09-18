@@ -10,15 +10,13 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.android.material.tabs.TabLayout;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.tabs.TabLayout;
 import com.nativo.sampleapp.NativeAdImpl.NativeAd;
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd;
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd;
@@ -26,14 +24,13 @@ import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage;
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl;
 import com.nativo.sampleapp.ViewFragment.DfpFragment;
 import com.nativo.sampleapp.ViewFragment.GridFragment;
+import com.nativo.sampleapp.ViewFragment.ListViewFragment;
 import com.nativo.sampleapp.ViewFragment.MOAPFragment;
 import com.nativo.sampleapp.ViewFragment.RecyclerViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewVideoFragment;
-import com.nativo.sampleapp.ViewFragment.ListViewFragment;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvcore.NtvAdData;
 
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_INVALID_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
