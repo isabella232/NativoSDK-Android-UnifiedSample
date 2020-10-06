@@ -26,14 +26,6 @@ public class StandardDisplayAdRecycler extends RecyclerListViewHolder implements
 
     @Override
     public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
-        shareButton = (ImageView) view.findViewById(R.id.share_icon);
-        shareButton.setOnClickListener(v -> {
-            v.getContext().startActivity(Intent.createChooser(
-                    new Intent(Intent.ACTION_SEND)
-                            .setType("text/plain")
-                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
-            NativoSDK.getInstance().trackShareAction(trackUrl);
-        });
     }
 
     @Override
