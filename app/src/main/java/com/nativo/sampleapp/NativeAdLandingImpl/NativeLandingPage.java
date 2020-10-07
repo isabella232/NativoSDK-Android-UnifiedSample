@@ -9,17 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvadtype.landing.NtvLandingPageInterface;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.ntvutils.AppUtils;
 
 import java.util.Date;
 import java.util.Random;
 
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAdapter {
 
@@ -31,6 +36,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     private int boapIndex = 0;
 
     private ImageView shareButton;
+    private ViewGroup scrollView;
 
     @Override
     public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
@@ -112,6 +118,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
         authorNameLabel = v.findViewById(R.id.article_author);
         shareButton = v.findViewById(R.id.share_icon);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
+        scrollView = adContainerView.findViewById(R.id.landing_boap_container);
     }
 
     @Override
@@ -131,7 +138,11 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-
+        Context context = AppUtils.getInstance().getContext();
+        context.startActivity(new Intent(context, SponsoredContentActivity.class)
+                .putExtra(SP_SECTION_URL, s)
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, scrollView.hashCode()));
     }
 
     @Override
