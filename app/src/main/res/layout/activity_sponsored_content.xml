@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/landing_boap_container"
+    android:id="@+id/landing_page_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/landing_boap_container">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -82,6 +83,12 @@
                 android:layout_below="@id/article_author"
                 android:isScrollContainer="true" />
 
+            <include
+                layout="@layout/native_article"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/web_view" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

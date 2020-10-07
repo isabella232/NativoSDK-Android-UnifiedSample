@@ -91,9 +91,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void contentWebViewOnPageFinished() {
-        ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
-        boapIndex = new Random().nextInt();
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, viewGroup, boapIndex, this, null);
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, this, null);
     }
 
     @Override
@@ -148,17 +146,18 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData) {
-        tryPlaceAd(boapIndex);
+        tryPlaceAd();
     }
 
-    private void tryPlaceAd(int i) {
+    private void tryPlaceAd() {
+        boapIndex = new Random().nextInt();
         View view = adContainerView.findViewById(R.id.article_layout);
         ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
-        NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
+        NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, boapIndex, this, null);
     }
 
     @Override
     public void onFail(String s) {
-        tryPlaceAd(boapIndex);
+        tryPlaceAd();
     }
 }
