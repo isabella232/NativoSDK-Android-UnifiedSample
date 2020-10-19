@@ -32,19 +32,7 @@ public class NativeAd implements NtvNativeAdInterface {
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
-    private ImageView shareButton;
 
-    @Override
-    public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
-        shareButton = (ImageView) view.findViewById(R.id.share_icon);
-        shareButton.setOnClickListener(v -> {
-            v.getContext().startActivity(Intent.createChooser(
-                    new Intent(Intent.ACTION_SEND)
-                            .setType("text/plain")
-                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
-            NativoSDK.getInstance().trackShareAction(trackUrl);
-        });
-    }
     @Override
     public TextView getTitleLabel() {
         if (titleLabel == null) {

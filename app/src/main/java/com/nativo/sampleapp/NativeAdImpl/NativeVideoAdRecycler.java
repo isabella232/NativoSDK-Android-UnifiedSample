@@ -1,7 +1,6 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.TextureView;
@@ -14,10 +13,9 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
-import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
 import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;
 
@@ -41,20 +39,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     private TextView articleDateLabel;
     private ProgressBar progressBar;
     private View view;
-    private ImageView shareButton;
     private CardView cardView;
-
-    @Override
-    public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
-        shareButton = (ImageView) view.findViewById(R.id.share_icon);
-        shareButton.setOnClickListener(v -> {
-            v.getContext().startActivity(Intent.createChooser(
-                    new Intent(Intent.ACTION_SEND)
-                            .setType("text/plain")
-                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
-            NativoSDK.getInstance().trackShareAction(trackUrl);
-        });
-    }
 
     @Override
     public int getLayout(Context context) {

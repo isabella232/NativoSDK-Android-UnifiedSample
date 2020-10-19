@@ -1,32 +1,23 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
-import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ImageView;
-
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
-import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.display.NtvStandardDisplayInterface;
 
 public class StandardDisplayAdRecycler extends RecyclerListViewHolder implements NtvStandardDisplayInterface {
 
     private CardView layout;
     private WebView webView;
-    private ImageView shareButton;
     private View view;
-
-    @Override
-    public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
-    }
 
     @Override
     public WebView getContentWebView() {

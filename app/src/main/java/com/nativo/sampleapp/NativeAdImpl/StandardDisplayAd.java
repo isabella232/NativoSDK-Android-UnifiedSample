@@ -1,29 +1,20 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
-import androidx.cardview.widget.CardView;
-
-import android.content.Intent;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageView;
+
+import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
 
-import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.display.NtvStandardDisplayInterface;
 
 public class StandardDisplayAd implements NtvStandardDisplayInterface {
 
     private CardView layout;
     private WebView webView;
-    private ImageView shareButton;
     private View view;
-
-    @Override
-    public void setShareAndTrackingUrl(final String shareUrl, final String trackUrl) {
-
-    }
 
     @Override
     public WebView getContentWebView() {
