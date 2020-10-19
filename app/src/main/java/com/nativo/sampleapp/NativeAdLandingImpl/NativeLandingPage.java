@@ -34,6 +34,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     private View adContainerView;
     private ImageView articleAuthorImage;
     private int boapIndex = 0;
+    private ImageView shareButton;
 
     private ViewGroup scrollView;
 
@@ -95,6 +96,20 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     @Override
     public int getLayout(Context context) {
         return R.layout.activity_sponsored_content;
+    }
+
+    @Override
+    public void setShareAndTrackingUrl(String shareUrl, String adUUID) {
+        shareButton = (ImageView) adContainerView.findViewById(R.id.share_icon);
+        if (shareButton != null) {
+            shareButton.setOnClickListener(v -> {
+                v.getContext().startActivity(Intent.createChooser(
+                        new Intent(Intent.ACTION_SEND)
+                                .setType("text/plain")
+                                .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
+                NativoSDK.getInstance().trackShareAction(adUUID);
+            });
+        }
     }
 
     @Override

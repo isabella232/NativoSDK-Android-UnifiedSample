@@ -66,6 +66,16 @@
                 android:layout_toEndOf="@id/article_author"
                 tools:src="@drawable/nativo_icon" />
 
+            <ImageView
+                android:id="@+id/share_icon"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_below="@id/title_label"
+                android:layout_margin="2dp"
+                android:layout_toEndOf="@id/article_author_image"
+                android:src="@drawable/share_icon"
+                tools:src="@drawable/share_icon" />
+
             <WebView
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
