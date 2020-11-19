@@ -2,15 +2,16 @@ package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
 import android.graphics.Color;
-import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
+import androidx.cardview.widget.CardView;
+
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
 
@@ -32,7 +33,6 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
-
 
     @Override
     public TextView getTitleLabel() {
@@ -119,7 +119,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
         articleDateLabel = v.findViewById(R.id.article_date);
-        articlePreviewLabel = v.findViewById(R.id.article_preview);
+        articlePreviewLabel = v.findViewById(R.id.article_description);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);

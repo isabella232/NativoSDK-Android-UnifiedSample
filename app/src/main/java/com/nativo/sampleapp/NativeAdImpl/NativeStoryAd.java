@@ -1,24 +1,23 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.nativo.sampleapp.R;
 
-import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeAd implements NtvNativeAdInterface {
+public class NativeStoryAd implements NtvNativeAdInterface {
 
     private LinearLayout layout;
     private CardView cardView;
@@ -34,6 +33,11 @@ public class NativeAd implements NtvNativeAdInterface {
     private View adContainerView;
 
     @Override
+    public ImageView getPreviewImageView() {
+        return image;
+    }
+
+    @Override
     public TextView getTitleLabel() {
         if (titleLabel == null) {
             titleLabel = (TextView) view.findViewById(R.id.article_title);
@@ -43,23 +47,16 @@ public class NativeAd implements NtvNativeAdInterface {
     }
 
     @Override
-    public View getAdContainerView() {
-        return adContainerView;
-    }
-
-    @Override
     public TextView getAuthorLabel() {
+        if (!authorLabel.getText().toString().contains("By")) {
+            authorLabel.append("By ", 0, 3);
+        }
         return authorLabel;
     }
 
     @Override
     public TextView getPreviewTextLabel() {
         return articlePreviewLabel;
-    }
-
-    @Override
-    public ImageView getPreviewImageView() {
-        return image;
     }
 
     @Override
@@ -76,10 +73,17 @@ public class NativeAd implements NtvNativeAdInterface {
     public void displaySponsoredIndicators(boolean b) {
         if (cardView != null) {
             cardView.setBackgroundColor(Color.LTGRAY);
+        } else if (view != null){
+            view.setBackgroundColor(Color.LTGRAY);
         }
         if (sponsoredTag != null) {
             sponsoredTag.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public ImageView getAdChoicesImageView() {
+        return adChoicesIndicator;
     }
 
     @Override
@@ -109,7 +113,8 @@ public class NativeAd implements NtvNativeAdInterface {
     }
 
     @Override
-    public ImageView getAdChoicesImageView() {
-        return adChoicesIndicator;
+    public View getAdContainerView() {
+        return adContainerView;
     }
+
 }

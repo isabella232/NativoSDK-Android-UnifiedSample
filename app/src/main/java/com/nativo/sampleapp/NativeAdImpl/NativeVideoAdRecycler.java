@@ -1,6 +1,7 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
+import androidx.cardview.widget.CardView;
+
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
 import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;
@@ -31,9 +34,12 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     private TextView authorLabel;
     private ImageView sponsoredIndicator;
     private ImageView adChoicesIndicator;
+    private TextView articlePreviewLabel;
+    private ImageView articleAuthorImage;
+    private TextView articleDateLabel;
     private ProgressBar progressBar;
-    private View adContainerView;
-
+    private View view;
+    private CardView cardView;
 
     @Override
     public int getLayout(Context context) {
@@ -42,12 +48,12 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
 
     public NativeVideoAdRecycler(View itemView, ViewGroup viewGroup) {
         super(itemView, viewGroup);
-        adContainerView = itemView;
+        view = itemView;
     }
 
     @Override
     public View getAdContainerView() {
-        return adContainerView;
+        return view;
     }
 
     @Override
@@ -62,11 +68,15 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
         previewImage = (ImageView) v.findViewById(R.id.preview_image);
         playButton = (ImageView) v.findViewById(R.id.play);
         restartButton = (ImageView) v.findViewById(R.id.restart);
-        titleLabel = (TextView) v.findViewById(R.id.title);
-        authorLabel = (TextView) v.findViewById(R.id.author);
+        titleLabel = (TextView) v.findViewById(R.id.article_title);
+        authorLabel = (TextView) v.findViewById(R.id.article_author);
         progressBar = v.findViewById(R.id.video_progress_bar);
         muteIndicator = v.findViewById(R.id.mute_indicator);
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
+        articlePreviewLabel = v.findViewById(R.id.article_description);
+        articleAuthorImage = v.findViewById(R.id.article_author_image);
+        articleDateLabel = v.findViewById(R.id.article_date);
+        cardView = v.findViewById(R.id.video_constraint_layout);
     }
 
     @Override
@@ -106,25 +116,23 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
 
     @Override
     public TextView getPreviewTextLabel() {
-        return null;
+        return articlePreviewLabel;
     }
 
     @Override
     public ImageView getAuthorImageView() {
-        return null;
+        return articleAuthorImage;
     }
 
     @Override
     public TextView getDateLabel() {
-        return null;
+        return articleDateLabel;
     }
 
     @Override
     public void displaySponsoredIndicators(boolean isSponsored) {
-        if (isSponsored) {
-            layout.setBackgroundResource(R.drawable.sponsored_border);
-        } else {
-            layout.setBackground(null);
+        if (cardView != null) {
+            cardView.setBackgroundColor(Color.LTGRAY);
         }
     }
 

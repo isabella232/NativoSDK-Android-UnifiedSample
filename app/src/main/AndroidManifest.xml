@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SponsoredContentActivity" />
+        <activity android:name="net.nativo.sdk.ntvadtype.stories.NtvStoryAdActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
 
 </manifest>

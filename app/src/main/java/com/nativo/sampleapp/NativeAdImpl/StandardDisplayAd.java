@@ -1,9 +1,10 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
-import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.webkit.WebView;
+
+import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
 
@@ -13,6 +14,7 @@ public class StandardDisplayAd implements NtvStandardDisplayInterface {
 
     private CardView layout;
     private WebView webView;
+    private View view;
 
     @Override
     public WebView getContentWebView() {
@@ -35,9 +37,10 @@ public class StandardDisplayAd implements NtvStandardDisplayInterface {
     }
 
     @Override
-    public void bindViews(View view) {
-        layout = view.findViewById(R.id.standard_display_layout);
-        webView = view.findViewById(R.id.standard_display_webview);
+    public void bindViews(View v) {
+        view = v;
+        layout = v.findViewById(R.id.standard_display_layout);
+        webView = v.findViewById(R.id.standard_display_webview);
     }
 
     @Override

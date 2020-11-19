@@ -1,9 +1,10 @@
 package com.nativo.sampleapp;
 
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
 
 import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage;
 
@@ -15,12 +16,7 @@ import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 public class SponsoredContentActivity extends AppCompatActivity {
 
-    String sectionUrl;
-    int campaignId;
-    Integer containerHash;
     boolean withView = true;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +26,7 @@ public class SponsoredContentActivity extends AppCompatActivity {
         Integer containerHash = getIntent().getIntExtra(SP_CONTAINER_HASH, 0);
         //pass in the class that implemented the NtvLandingPageInterface. Can be different layout classes that you switch between
         setContentView(R.layout.activity_sponsored_content);
-        View view = findViewById(R.id.landing_boap_container);
+        View view = findViewById(R.id.landing_page_container);
         if (withView) {
             NativoSDK.getInstance().initLandingPage(view, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
         } else {

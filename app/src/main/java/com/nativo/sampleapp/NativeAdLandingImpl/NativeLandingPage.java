@@ -1,6 +1,7 @@
 package com.nativo.sampleapp.NativeAdLandingImpl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -8,17 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvadtype.landing.NtvLandingPageInterface;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.ntvutils.AppUtils;
 
 import java.util.Date;
 import java.util.Random;
 
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAdapter {
 
@@ -26,7 +32,11 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     private TextView titleLabel;
     private TextView authorNameLabel;
     private View adContainerView;
-    int boapIndex = 0;
+    private ImageView articleAuthorImage;
+    private int boapIndex = 0;
+    private ImageView shareButton;
+
+    private ViewGroup scrollView;
 
     @Override
     public WebView getContentWebView() {
@@ -45,7 +55,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public ImageView getAuthorImageView() {
-        return null;
+        return articleAuthorImage;
     }
 
     @Override
@@ -75,9 +85,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void contentWebViewOnPageFinished() {
-        ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
-        boapIndex = new Random().nextInt();
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, viewGroup, boapIndex, this, null);
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, this, null);
     }
 
     @Override
@@ -91,11 +99,27 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     }
 
     @Override
+    public void setShareAndTrackingUrl(String shareUrl, String adUUID) {
+        shareButton = (ImageView) adContainerView.findViewById(R.id.share_icon);
+        if (shareButton != null) {
+            shareButton.setOnClickListener(v -> {
+                v.getContext().startActivity(Intent.createChooser(
+                        new Intent(Intent.ACTION_SEND)
+                                .setType("text/plain")
+                                .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
+                NativoSDK.getInstance().trackShareAction(adUUID);
+            });
+        }
+    }
+
+    @Override
     public void bindViews(View v) {
         adContainerView = v;
         webView = v.findViewById(R.id.web_view);
         titleLabel = v.findViewById(R.id.title_label);
-        authorNameLabel = v.findViewById(R.id.author_label);
+        authorNameLabel = v.findViewById(R.id.article_author);
+        articleAuthorImage = v.findViewById(R.id.article_author_image);
+        scrollView = adContainerView.findViewById(R.id.landing_boap_container);
     }
 
     @Override
@@ -115,7 +139,11 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-
+        Context context = AppUtils.getInstance().getContext();
+        context.startActivity(new Intent(context, SponsoredContentActivity.class)
+                .putExtra(SP_SECTION_URL, s)
+                .putExtra(SP_CAMPAIGN_ID, i)
+                .putExtra(SP_CONTAINER_HASH, scrollView.hashCode()));
     }
 
     @Override
@@ -130,17 +158,18 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData) {
-        tryPlaceAd(boapIndex);
+        tryPlaceAd();
     }
 
-    private void tryPlaceAd(int i) {
+    private void tryPlaceAd() {
+        boapIndex = new Random().nextInt();
         View view = adContainerView.findViewById(R.id.article_layout);
         ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
-        NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
+        NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, boapIndex, this, null);
     }
 
     @Override
     public void onFail(String s) {
-        tryPlaceAd(boapIndex);
+        tryPlaceAd();
     }
 }
