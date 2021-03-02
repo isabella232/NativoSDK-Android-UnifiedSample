@@ -48,7 +48,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         convertView = view.findViewById(R.id.article_container);
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) view,0, viewFragment, null);
+        NativoSDK.prefetchAdForSection(SECTION_URL, (ViewGroup) view,0, viewFragment, null);
         if (!getAd()) {
             bindView(view, 0);
         }
@@ -58,7 +58,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     }
 
     private boolean getAd() {
-        return NativoSDK.getInstance().placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
+        return NativoSDK.placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
     }
 
     private void bindView(View view, int i) {
@@ -97,8 +97,8 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     View.OnClickListener loadAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) getView(),0, viewFragment, null);
-            Log.d(getClass().getName(), NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL,(ViewGroup) getView(), 0).toString());
+            NativoSDK.prefetchAdForSection(SECTION_URL, (ViewGroup) getView(),0, viewFragment, null);
+            Log.d(getClass().getName(), NativoSDK.getAdTypeForIndex(SECTION_URL,(ViewGroup) getView(), 0).toString());
             if (!getAd()) {
                 bindView(getView(), 0);
             }

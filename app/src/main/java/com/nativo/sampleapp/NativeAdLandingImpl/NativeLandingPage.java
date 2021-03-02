@@ -85,7 +85,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void contentWebViewOnPageFinished() {
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, this, null);
+        NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
                         new Intent(Intent.ACTION_SEND)
                                 .setType("text/plain")
                                 .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
-                NativoSDK.getInstance().trackShareAction(adUUID);
+                NativoSDK.trackShareAction(adUUID);
             });
         }
     }
@@ -165,7 +165,7 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
         boapIndex = new Random().nextInt();
         View view = adContainerView.findViewById(R.id.article_layout);
         ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
-        NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, boapIndex, this, null);
+        NativoSDK.placeAdInView(view, viewGroup, SECTION_URL, boapIndex, this, null);
     }
 
     @Override

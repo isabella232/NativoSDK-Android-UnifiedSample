@@ -58,13 +58,13 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_VIDEO)) {
+        if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_NATIVE)) {
+        } else if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
 
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, listView, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.placeAdInView(view, listView, SECTION_URL, i, this, null);
         if (!ad) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             bindView(view, i);

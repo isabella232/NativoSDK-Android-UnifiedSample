@@ -45,7 +45,7 @@ public class MOAPFragment extends Fragment {
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                NativoSDK.getInstance().placeAdInWebView(mWebView, MOAP_SECTION_URL);
+                NativoSDK.placeAdInWebView(mWebView, MOAP_SECTION_URL);
             }
         });
         mWebView.loadUrl(PUBLISHER_URL);

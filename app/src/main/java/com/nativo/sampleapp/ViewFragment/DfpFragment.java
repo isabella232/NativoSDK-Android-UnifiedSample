@@ -71,7 +71,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         nativoView.setVisibility(View.GONE);
         nativoVideoView = view.findViewById(R.id.video_constraint_layout);
         nativoVideoView.setVisibility(View.GONE);
-        NativoSDK.getInstance().enableDFPRequestsWithVersion("17.0.0");
+        NativoSDK.initWithGAMVersion(this.getContext(), "17.0.0");
         View loadAd = view.findViewById(R.id.load_ad);
         loadAd.setOnClickListener(loadClick);
         loadDfpAd();
@@ -93,7 +93,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
                 Log.d("DFP","adUnit: "+mPublisherAdView.getAdUnitId()+" adSize: "+mPublisherAdView.getAdSize());
                 if(mPublisherAdView.getAdSize().equals(ntvAdSize) ) {
                     //call nativo.dfp.bannerexample.sdk method here pass in the mAdView to parse out the html
-                    NativoSDK.getInstance().makeDFPRequestWithPublisherAdView(mPublisherAdView, parentView,DFP_SECTION_URL, 0, fragmentAdapter);
+                    NativoSDK.makeGAMRequestWithPublisherAdView(mPublisherAdView, parentView,DFP_SECTION_URL, 0, fragmentAdapter);
                 }
                 else{
                     Log.d("DFP", "Did receive DFP banner ad");
@@ -142,10 +142,10 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         Log.d("DFP", "Ad loaded");
         if (ntvAdData.getAdType() == NtvAdData.NtvAdType.NATIVE || ntvAdData.getAdType() == NtvAdData.NtvAdType.CLICK_OUT) {
             nativoView.setVisibility(View.VISIBLE);
-            NativoSDK.getInstance().placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
         } else if (ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO) {
             nativoVideoView.setVisibility(View.VISIBLE);
-            NativoSDK.getInstance().placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+            NativoSDK.placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
         }
     }
 

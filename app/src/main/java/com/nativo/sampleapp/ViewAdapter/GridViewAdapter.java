@@ -63,7 +63,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
 
-        NativoAdType adType = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, gridView, i);
+        NativoAdType adType = NativoSDK.getAdTypeForIndex(SECTION_URL, gridView, i);
         if (adType.equals(NativoAdType.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
         } else if (adType.equals(NativoAdType.AD_TYPE_NATIVE)) {
@@ -72,7 +72,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
         }
 
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, gridView, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.placeAdInView(view, gridView, SECTION_URL, i, this, null);
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
             if (!ad) {
                 view.setVisibility(View.GONE);

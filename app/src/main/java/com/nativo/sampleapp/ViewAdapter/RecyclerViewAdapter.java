@@ -91,13 +91,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         View view = listViewHolder.getContainer();
         if (listViewHolder instanceof NativeAdRecycler ||
                 listViewHolder instanceof NativeVideoAdRecycler || listViewHolder instanceof StandardDisplayAdRecycler) {
-            ad = NativoSDK.getInstance().placeAdInView(view,
+            ad = NativoSDK.placeAdInView(view,
                     recyclerView, SECTION_URL, i, this, null);
         }
 
         if (!ad) {
             bindView(listViewHolder.getContainer(), i);
-            NativoSDK.getInstance().placeAdInView(view, recyclerView,
+            NativoSDK.placeAdInView(view, recyclerView,
                     SECTION_URL, i, this, null);
         }
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
@@ -108,7 +108,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public int getItemViewType(int position) {
-        NativoAdType s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, position);
+        NativoAdType s = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, position);
         switch (s) {
             case AD_TYPE_STORY:
                 return 4;
@@ -206,7 +206,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     public void onFail(String s) {
         // protect against removing non ad views
         for (Integer index : adsRequestIndex) {
-            NativoAdType adTypeForIndex = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, recyclerView, index);
+            NativoAdType adTypeForIndex = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, index);
             if (AD_TYPE_NOFILL.equals(adTypeForIndex)) {
                 integerList.remove(index);
                 notifyItemRemoved(index);

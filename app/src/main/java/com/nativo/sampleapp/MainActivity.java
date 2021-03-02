@@ -39,11 +39,27 @@ import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_INVALID_CONSENT
 import static net.nativo.sdk.ntvconstant.NtvConstants.CCPA_SHARED_PREFERENCE_STRING;
 import static net.nativo.sdk.ntvconstant.NtvConstants.GDPR_SHARED_PREFERENCE_STRING;
 
+enum NtvFragmentType {
+    RECYCLE_LIST,
+    GRID,
+    TABLE,
+    SINGLEVIEW,
+    SINGLEVIEW_VIDEO,
+    GAM_INTEGRATION,
+    MIDDLE_OF_ARTICLE
+}
+
 public class MainActivity extends AppCompatActivity {
+
+    NtvFragmentType fragmentType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set desired fragment for app
+        setMainFragment(NtvFragmentType.RECYCLE_LIST);
+
         setContentView(R.layout.activity_main);
         FragmentViewAdapter fragmentViewAdapter = new FragmentViewAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.pager);
@@ -62,35 +78,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        NativoSDK.getInstance().init(this);
-        NativoSDK.getInstance().registerNativeAd(new NativeAd());
-        NativoSDK.getInstance().registerLandingPage(new NativeLandingPage());
-        NativoSDK.getInstance().registerVideoAd(new NativeVideoAd());
-        // Can use the default implementation provided by the SDK
-//        NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
-        NativoSDK.getInstance().registerFullscreenVideo(new FullScreenVideoImpl());
-        NativoSDK.getInstance().registerStandardDisplayAd(new StandardDisplayAd());
-        // Developers can modify to force specific ad types
-//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
-        NativoSDK.getInstance().enableDevLogs();
+        NativoSDK.init(this);
+        NativoSDK.registerNativeAd(new NativeAd());
+        NativoSDK.registerLandingPage(new NativeLandingPage());
+        NativoSDK.registerVideoAd(new NativeVideoAd());
+        NativoSDK.registerFullscreenVideo(new FullScreenVideoImpl());
+        NativoSDK.registerStandardDisplayAd(new StandardDisplayAd());
+        NativoSDK.enableDevLogs();
+
+        // Force specific ad types if needed
+//        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
+    }
+
+    private void setMainFragment(NtvFragmentType fragmentType) {
+        this.fragmentType = fragmentType;
+    }
+
+    private NtvFragmentType getMainFragment() {
+        return this.fragmentType;
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        NativoSDK.getInstance().onConfigurationChanged(newConfig);
+        NativoSDK.onConfigurationChanged(newConfig);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        NativoSDK.getInstance().onPause();
+        NativoSDK.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        NativoSDK.getInstance().onResume();
+        NativoSDK.onResume();
     }
 
     private class FragmentViewAdapter extends FragmentPagerAdapter {
@@ -102,20 +125,20 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int i) {
-            switch (i) {
-                case 0:
+            switch (getMainFragment()) {
+                case RECYCLE_LIST:
                     return new RecyclerViewFragment();
-                case 1:
+                case GRID:
                     return new GridFragment();
-                case 2:
+                case TABLE:
                     return new ListViewFragment();
-                case 3:
+                case SINGLEVIEW:
                     return new SingleViewFragment();
-                case 4:
+                case SINGLEVIEW_VIDEO:
                     return new SingleViewVideoFragment();
-                case 5:
+                case GAM_INTEGRATION:
                     return new DfpFragment();
-                case 6:
+                case MIDDLE_OF_ARTICLE:
                     return new MOAPFragment();
             }
             return null;
@@ -129,20 +152,20 @@ public class MainActivity extends AppCompatActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
+            switch (getMainFragment()) {
+                case RECYCLE_LIST:
                     return getResources().getText(R.string.recycle_list_tab);
-                case 1:
+                case GRID:
                     return getResources().getText(R.string.grid_tab);
-                case 2:
+                case TABLE:
                     return getResources().getText(R.string.table_tab);
-                case 3:
+                case SINGLEVIEW:
                     return getResources().getText(R.string.single_view);
-                case 4:
+                case SINGLEVIEW_VIDEO:
                     return getResources().getText(R.string.single_view_video);
-                case 5:
-                    return getResources().getText(R.string.dfp);
-                case 6:
+                case GAM_INTEGRATION:
+                    return getResources().getText(R.string.gam);
+                case MIDDLE_OF_ARTICLE:
                     return getResources().getText(R.string.moap);
             }
             return null;
