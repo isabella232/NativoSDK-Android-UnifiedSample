@@ -26,7 +26,7 @@ import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
 import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
-public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAdapter {
+public class NativeLandingPage implements NtvLandingPageInterface {
 
     private WebView webView;
     private TextView titleLabel;
@@ -85,7 +85,6 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
 
     @Override
     public void contentWebViewOnPageFinished() {
-        NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
     }
 
     @Override
@@ -125,51 +124,5 @@ public class NativeLandingPage implements NtvLandingPageInterface, NtvSectionAda
     @Override
     public View getAdContainerView() {
         return adContainerView;
-    }
-
-    @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
-    }
-
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
-    }
-
-    @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        Context context = AppUtils.getInstance().getContext();
-        context.startActivity(new Intent(context, SponsoredContentActivity.class)
-                .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, scrollView.hashCode()));
-    }
-
-    @Override
-    public void needsDisplayClickOutURL(String s, String s1) {
-
-    }
-
-    @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
-
-    }
-
-    @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
-        tryPlaceAd();
-    }
-
-    private void tryPlaceAd() {
-        boapIndex = new Random().nextInt();
-        View view = adContainerView.findViewById(R.id.article_layout);
-        ViewGroup viewGroup = adContainerView.findViewById(R.id.landing_boap_container);
-        NativoSDK.placeAdInView(view, viewGroup, SECTION_URL, boapIndex, this, null);
-    }
-
-    @Override
-    public void onFail(String s) {
-        tryPlaceAd();
     }
 }

@@ -1,11 +1,16 @@
 package com.nativo.sampleapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,11 +36,17 @@ import com.nativo.sampleapp.ViewFragment.SingleViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewVideoFragment;
 
 import net.nativo.sdk.NativoSDK;
+import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvcore.NtvAdData;
+import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_INVALID_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_INVALID_CONSENT;
+import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
 import static net.nativo.sdk.ntvconstant.NtvConstants.CCPA_SHARED_PREFERENCE_STRING;
 import static net.nativo.sdk.ntvconstant.NtvConstants.GDPR_SHARED_PREFERENCE_STRING;
 
@@ -49,7 +60,7 @@ enum NtvFragmentType {
     MIDDLE_OF_ARTICLE
 }
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NtvSectionAdapter {
 
     NtvFragmentType fragmentType;
 
@@ -57,17 +68,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set desired fragment for app
-        setMainFragment(NtvFragmentType.RECYCLE_LIST);
+        nativoInit();
+        //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
 
-        setContentView(R.layout.activity_main);
-        FragmentViewAdapter fragmentViewAdapter = new FragmentViewAdapter(getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.pager);
-        viewPager.setAdapter(fragmentViewAdapter);
-        viewPager.setOffscreenPageLimit(0);
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        init();
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Set desired fragment for app
+                setMainFragment(NtvFragmentType.RECYCLE_LIST);
+
+                setContentView(R.layout.activity_main);
+                FragmentViewAdapter fragmentViewAdapter = new FragmentViewAdapter(getSupportFragmentManager());
+                ViewPager viewPager = findViewById(R.id.pager);
+                viewPager.setAdapter(fragmentViewAdapter);
+                viewPager.setOffscreenPageLimit(0);
+                TabLayout tabLayout = findViewById(R.id.tabs);
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        }, 2000);
     }
 
     private void setPrivacyAndTransparencyKeys() {
@@ -77,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void init() {
+    private void nativoInit() {
         NativoSDK.init(this);
         NativoSDK.registerNativeAd(new NativeAd());
         NativoSDK.registerLandingPage(new NativeLandingPage());
@@ -87,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         NativoSDK.enableDevLogs();
 
         // Force specific ad types if needed
-//        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
+//        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_VIDEO);
     }
 
     private void setMainFragment(NtvFragmentType fragmentType) {
@@ -215,5 +234,39 @@ public class MainActivity extends AppCompatActivity {
         editor.remove(GDPR_SHARED_PREFERENCE_STRING);
         editor.remove(CCPA_SHARED_PREFERENCE_STRING);
         editor.apply();
+    }
+
+    /**
+     *
+     * THIS IS NATIVE SECTION ADAPTER INTERFACE
+     */
+    @Override
+    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
+        return null;
+    }
+
+    @Override
+    public void needsDisplayLandingPage(String s, int i) {
+
+    }
+
+    @Override
+    public void needsDisplayClickOutURL(String s, String s1) {
+
+    }
+
+    @Override
+    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
+
+    }
+
+    @Override
+    public void onReceiveAd(String s, NtvAdData ntvAdData, Integer index) {
+        Log.e(this.getClass().getName(), "Did receive ad at index: "+index);
+    }
+
+    @Override
+    public void onFail(String s, Integer integer) {
+
     }
 }

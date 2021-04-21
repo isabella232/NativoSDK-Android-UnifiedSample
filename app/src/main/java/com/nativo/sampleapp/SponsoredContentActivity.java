@@ -33,5 +33,4 @@ public class SponsoredContentActivity extends AppCompatActivity {
             NativoSDK.initLandingPage(this, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
         }
     }
-
 }

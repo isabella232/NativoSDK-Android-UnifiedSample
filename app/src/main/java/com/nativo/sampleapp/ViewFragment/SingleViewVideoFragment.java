@@ -52,7 +52,7 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         convertView = view.findViewById(R.id.video_container);
-        NativoSDK.prefetchAdForSection(SECTION_URL, (ViewGroup) view, 0, viewFragment, null);
+        NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
         if (!getAd()) {
             bindView(view, 0);
         }
@@ -82,10 +82,8 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            if (shouldPlaceAdAtIndex("sample", i)) {
-                if (view.findViewById(R.id.article_container) != null) {
+            if (view.findViewById(R.id.article_container) != null) {
                     view.findViewById(R.id.article_container).setBackgroundColor(Color.RED);
-                }
             } else {
                 if (view.findViewById(R.id.article_container) != null) {
                     view.findViewById(R.id.article_container).setBackgroundColor(Color.WHITE);
@@ -128,11 +126,6 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     };
 
     @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
-    }
-
-    @Override
     public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
         return null;
     }
@@ -156,12 +149,12 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
 
     }
 
     @Override
-    public void onFail(String s) {
+    public void onFail(String section, Integer index) {
 
     }
 }

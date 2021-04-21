@@ -110,11 +110,6 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
-    }
-
-    @Override
     public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
         return null;
     }
@@ -138,7 +133,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, NtvAdData ntvAdData, Integer integer) {
         Log.d("DFP", "Ad loaded");
         if (ntvAdData.getAdType() == NtvAdData.NtvAdType.NATIVE || ntvAdData.getAdType() == NtvAdData.NtvAdType.CLICK_OUT) {
             nativoView.setVisibility(View.VISIBLE);
@@ -150,7 +145,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void onFail(String s) {
+    public void onFail(String s, Integer integer) {
         Log.d("DFP", "Ad load failed");
     }
 

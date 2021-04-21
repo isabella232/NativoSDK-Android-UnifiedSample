@@ -25,7 +25,6 @@ import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvconstant.NativoAdType;
-import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
@@ -42,7 +41,6 @@ import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
 import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
 import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
-import static net.nativo.sdk.ntvconstant.NativoAdType.AD_TYPE_NOFILL;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvSectionAdapter {
@@ -60,25 +58,44 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         for (int i = 0; i < 20; i++) {
             integerList.add(i);
         }
+        //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
+    }
+
+    // Helper method to determine which indexes should be Nativo ads
+    public boolean shouldPlaceNativoAdAtIndex(int i) {
+        return i % 2 == 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (shouldPlaceNativoAdAtIndex(position)) {
+            NativoAdType adType = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, position);
+            switch (adType) {
+                case AD_TYPE_NATIVE: return 1;
+                case AD_TYPE_VIDEO: return 2;
+                case AD_TYPE_STANDARD_DISPLAY: return 3;
+                default: return 0; // Publisher item view, in case of no ad fill
+            }
+        } else {
+            // Publisher item view
+            return 0;
+        }
     }
 
     @Override
     public RecyclerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         RecyclerListViewHolder viewHolder;
         View adViewTry;
-        if (i == 1) {
+        if (i == 1) { // Nativo Article
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             viewHolder = new NativeAdRecycler(adViewTry, viewGroup);
-        } else if (i == 2) {
+        } else if (i == 2) { // Nativo Video
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
             viewHolder = new NativeVideoAdRecycler(adViewTry, viewGroup);
-        } else if (i == 3) {
+        } else if (i == 3) { // Nativo Banner Ad
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
             viewHolder = new StandardDisplayAdRecycler(adViewTry, viewGroup);
-        } else if (i == 4) {
-            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-            viewHolder = new NativeStoryAdRecycler(adViewTry, viewGroup);
-        } else {
+        } else { // Publisher Article Layout
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
             viewHolder = new RecyclerListViewHolder(adViewTry, viewGroup);
         }
@@ -87,41 +104,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerListViewHolder listViewHolder, int i) {
-        boolean ad = false;
+
         View view = listViewHolder.getContainer();
-        if (listViewHolder instanceof NativeAdRecycler ||
-                listViewHolder instanceof NativeVideoAdRecycler || listViewHolder instanceof StandardDisplayAdRecycler) {
-            ad = NativoSDK.placeAdInView(view,
-                    recyclerView, SECTION_URL, i, this, null);
-        }
-
-        if (!ad) {
-            bindView(listViewHolder.getContainer(), i);
-            NativoSDK.placeAdInView(view, recyclerView,
-                    SECTION_URL, i, this, null);
-        }
-        if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
+        boolean isAdContentAvailable = false;
+        if (shouldPlaceNativoAdAtIndex(i)) {
+            Log.e(TAG, "binding index: "+i);
             adsRequestIndex.add(i);
+            isAdContentAvailable = NativoSDK.placeAdInView(view, recyclerView, SECTION_URL, i, this, null);
         }
-    }
 
-
-    @Override
-    public int getItemViewType(int position) {
-        NativoAdType s = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, position);
-        switch (s) {
-            case AD_TYPE_STORY:
-                return 4;
-            case AD_TYPE_STANDARD_DISPLAY:
-                return 3;
-            case AD_TYPE_VIDEO:
-                return 2;
-            case AD_TYPE_NATIVE:
-                return 1;
-            case AD_TYPE_NONE:
-                return 0;
-            default:
-                return -1;
+        if (!isAdContentAvailable) {
+            bindView(listViewHolder.getContainer(), i);
         }
     }
 
@@ -161,12 +154,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         return integerList.size();
     }
 
-
     @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i % 2 == 1;
+    public long getItemId(int position) {
+        return position;
     }
 
+    @Override
+    public void onViewRecycled(@NonNull RecyclerListViewHolder holder) {
+        if (holder instanceof NativeVideoAdRecycler) {
+            TextureView textureView = ((NativeVideoAdRecycler) holder).getTextureView();
+            ((ViewGroup) holder.itemView).removeView(textureView);
+        }
+        super.onViewRecycled(holder);
+    }
+
+    /**
+     * NtvSectionAdapter implementation
+     */
     @Override
     public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
         return null;
@@ -190,44 +194,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     }
 
-    @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
-        notifyDataSetChanged();
-        JSONObject adContent = ntvAdData.getRawContent();
-        try {
-            String shareUrl = adContent.getString("permanentLink");
-            Log.e(TAG, "onReceiveAd: " + shareUrl );
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onFail(String s) {
-        // protect against removing non ad views
-        for (Integer index : adsRequestIndex) {
-            NativoAdType adTypeForIndex = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, index);
-            if (AD_TYPE_NOFILL.equals(adTypeForIndex)) {
-                integerList.remove(index);
-                notifyItemRemoved(index);
-                notifyItemChanged(index);
-            }
-        }
+    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
+        Log.e(this.getClass().getName(), "Index: "+index+" Did receive ad: "+ ntvAdData);
+        integerList.add(index);
         notifyDataSetChanged();
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public void onViewRecycled(@NonNull RecyclerListViewHolder holder) {
-        if (holder instanceof NativeVideoAdRecycler) {
-            TextureView textureView = ((NativeVideoAdRecycler) holder).getTextureView();
-            ((ViewGroup) holder.itemView).removeView(textureView);
-
+    public void onFail(String section, Integer index) {
+        // Remove failed Nativo ads
+        NativoAdType adTypeForIndex = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, index);
+        if (adTypeForIndex == NativoAdType.AD_TYPE_NONE) {
+            integerList.remove(index);
+            notifyItemRemoved(index);
+            notifyItemChanged(index);
         }
-        super.onViewRecycled(holder);
+        notifyDataSetChanged();
     }
 }

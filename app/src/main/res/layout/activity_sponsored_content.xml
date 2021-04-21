@@ -83,12 +83,6 @@
                 android:layout_below="@id/article_author"
                 android:isScrollContainer="true" />
 
-            <include
-                layout="@layout/native_article"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/web_view" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

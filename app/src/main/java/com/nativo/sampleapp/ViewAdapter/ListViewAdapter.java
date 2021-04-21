@@ -89,7 +89,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            if (shouldPlaceAdAtIndex("sample", i)) {
+            if (shouldPlaceNativoAdAtIndex(i)) {
                 view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
             } else {
                 view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
@@ -106,8 +106,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         }
     };
 
-    @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
+    public boolean shouldPlaceNativoAdAtIndex(int i) {
         return i % 3 == 0;
     }
 
@@ -135,13 +134,12 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
         notifyDataSetChanged();
     }
 
     @Override
-    public void onFail(String s) {
+    public void onFail(String section, Integer index) {
         notifyDataSetChanged();
     }
-
 }
