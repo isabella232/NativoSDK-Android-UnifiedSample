@@ -74,10 +74,10 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         NativoSDK.initWithGAMVersion(this.getContext(), "17.0.0");
         View loadAd = view.findViewById(R.id.load_ad);
         loadAd.setOnClickListener(loadClick);
-        loadDfpAd();
+        loadGAMAd();
     }
 
-    private void loadDfpAd() {
+    private void loadGAMAd() {
         mPublisherAdView = getView().findViewById(R.id.publisherAdView);
         final AdSize ntvAdSize = new AdSize(3,3);
         mPublisherAdView.setAdSizes(ntvAdSize,AdSize.BANNER);
@@ -152,7 +152,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     View.OnClickListener loadClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            loadDfpAd();
+            loadGAMAd();
         }
     };
 }
