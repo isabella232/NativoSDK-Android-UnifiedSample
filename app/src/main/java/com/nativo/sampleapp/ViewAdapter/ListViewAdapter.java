@@ -58,13 +58,13 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_VIDEO)) {
+        if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_NATIVE)) {
+        } else if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
 
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, listView, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.placeAdInView(view, listView, SECTION_URL, i, this, null);
         if (!ad) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             bindView(view, i);
@@ -89,7 +89,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            if (shouldPlaceAdAtIndex("sample", i)) {
+            if (shouldPlaceNativoAdAtIndex(i)) {
                 view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
             } else {
                 view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
@@ -106,8 +106,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         }
     };
 
-    @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
+    public boolean shouldPlaceNativoAdAtIndex(int i) {
         return i % 3 == 0;
     }
 
@@ -135,13 +134,12 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
         notifyDataSetChanged();
     }
 
     @Override
-    public void onFail(String s) {
+    public void onFail(String section, Integer index) {
         notifyDataSetChanged();
     }
-
 }

@@ -34,6 +34,12 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     private View view;
     private View adContainerView;
 
+    public NativeAdRecycler(View itemView, ViewGroup viewGroup) {
+        super(itemView, viewGroup);
+        adContainerView = itemView;
+        bindViews(itemView);
+    }
+
     @Override
     public TextView getTitleLabel() {
         if (titleLabel == null) {
@@ -46,12 +52,6 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     @Override
     public View getAdContainerView() {
         return adContainerView;
-    }
-
-    public NativeAdRecycler(View itemView, ViewGroup viewGroup) {
-        super(itemView, viewGroup);
-        adContainerView = itemView;
-        bindViews(itemView);
     }
 
     @Override

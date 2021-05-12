@@ -71,13 +71,13 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         nativoView.setVisibility(View.GONE);
         nativoVideoView = view.findViewById(R.id.video_constraint_layout);
         nativoVideoView.setVisibility(View.GONE);
-        NativoSDK.getInstance().enableDFPRequestsWithVersion("17.0.0");
+        NativoSDK.initWithGAMVersion(this.getContext(), "17.0.0");
         View loadAd = view.findViewById(R.id.load_ad);
         loadAd.setOnClickListener(loadClick);
-        loadDfpAd();
+        loadGAMAd();
     }
 
-    private void loadDfpAd() {
+    private void loadGAMAd() {
         mPublisherAdView = getView().findViewById(R.id.publisherAdView);
         final AdSize ntvAdSize = new AdSize(3,3);
         mPublisherAdView.setAdSizes(ntvAdSize,AdSize.BANNER);
@@ -93,7 +93,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
                 Log.d("DFP","adUnit: "+mPublisherAdView.getAdUnitId()+" adSize: "+mPublisherAdView.getAdSize());
                 if(mPublisherAdView.getAdSize().equals(ntvAdSize) ) {
                     //call nativo.dfp.bannerexample.sdk method here pass in the mAdView to parse out the html
-                    NativoSDK.getInstance().makeDFPRequestWithPublisherAdView(mPublisherAdView, parentView,DFP_SECTION_URL, 0, fragmentAdapter);
+                    NativoSDK.makeGAMRequestWithPublisherAdView(mPublisherAdView, parentView,DFP_SECTION_URL, 0, fragmentAdapter);
                 }
                 else{
                     Log.d("DFP", "Did receive DFP banner ad");
@@ -107,11 +107,6 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         });
 
         mPublisherAdView.loadAd(adRequest);
-    }
-
-    @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
     }
 
     @Override
@@ -138,26 +133,26 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, NtvAdData ntvAdData, Integer integer) {
         Log.d("DFP", "Ad loaded");
         if (ntvAdData.getAdType() == NtvAdData.NtvAdType.NATIVE || ntvAdData.getAdType() == NtvAdData.NtvAdType.CLICK_OUT) {
             nativoView.setVisibility(View.VISIBLE);
-            NativoSDK.getInstance().placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
         } else if (ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO) {
             nativoVideoView.setVisibility(View.VISIBLE);
-            NativoSDK.getInstance().placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+            NativoSDK.placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
         }
     }
 
     @Override
-    public void onFail(String s) {
+    public void onFail(String s, Integer integer) {
         Log.d("DFP", "Ad load failed");
     }
 
     View.OnClickListener loadClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            loadDfpAd();
+            loadGAMAd();
         }
     };
 }

@@ -19,6 +19,7 @@ import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvconstant.NativoAdType;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
@@ -29,7 +30,7 @@ import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
 
 public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
-    private View convertView;
+    private View nativoAdView;
     SingleViewFragment viewFragment = null;
 
     public SingleViewFragment() {
@@ -40,6 +41,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
         View view = inflater.inflate(R.layout.fragment_single_view, container, false);
         return view;
     }
@@ -47,18 +49,11 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        convertView = view.findViewById(R.id.article_container);
-        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) view,0, viewFragment, null);
-        if (!getAd()) {
-            bindView(view, 0);
-        }
+        nativoAdView = view.findViewById(R.id.article_container);
+
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
         view.findViewById(R.id.show_ad).setOnClickListener(showAd);
         view.findViewById(R.id.hide_ad).setOnClickListener(hideAd);
-    }
-
-    private boolean getAd() {
-        return NativoSDK.getInstance().placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
     }
 
     private void bindView(View view, int i) {
@@ -78,11 +73,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            if (shouldPlaceAdAtIndex("sample", i)) {
-                view.findViewById(R.id.article_container).setBackgroundColor(Color.RED);
-            } else {
-                view.findViewById(R.id.article_container).setBackgroundColor(Color.WHITE);
-            }
+            view.findViewById(R.id.article_container).setBackgroundColor(Color.RED);
             view.setOnClickListener(onClickListener);
         }
     }
@@ -97,32 +88,24 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     View.OnClickListener loadAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, (ViewGroup) getView(),0, viewFragment, null);
-            Log.d(getClass().getName(), NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL,(ViewGroup) getView(), 0).toString());
-            if (!getAd()) {
-                bindView(getView(), 0);
-            }
+            NativoSDK.clearAdsInSection(SECTION_URL, (ViewGroup) getView());
+            NativoSDK.prefetchAdForSection(SECTION_URL, viewFragment, null);
         }
     };
 
     View.OnClickListener hideAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            convertView.setVisibility(View.INVISIBLE);
+            nativoAdView.setVisibility(View.INVISIBLE);
         }
     };
 
     View.OnClickListener showAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            convertView.setVisibility(View.VISIBLE);
+            nativoAdView.setVisibility(View.VISIBLE);
         }
     };
-
-    @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
-    }
 
     @Override
     public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
@@ -148,12 +131,16 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
-
+    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
+        Log.e(this.getClass().getName(), "Did receive ad: "+ntvAdData);
+        boolean didGetNativoAd = NativoSDK.placeAdInView(nativoAdView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
+        if (didGetNativoAd) {
+            nativoAdView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
-    public void onFail(String s) {
-
+    public void onFail(String section, Integer index) {
+        nativoAdView.setVisibility(View.GONE);
     }
 }

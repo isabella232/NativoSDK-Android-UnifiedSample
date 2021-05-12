@@ -28,10 +28,9 @@ public class SponsoredContentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sponsored_content);
         View view = findViewById(R.id.landing_page_container);
         if (withView) {
-            NativoSDK.getInstance().initLandingPage(view, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
+            NativoSDK.initLandingPage(view, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
         } else {
-            NativoSDK.getInstance().initLandingPage(this, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
+            NativoSDK.initLandingPage(this, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
         }
     }
-
 }

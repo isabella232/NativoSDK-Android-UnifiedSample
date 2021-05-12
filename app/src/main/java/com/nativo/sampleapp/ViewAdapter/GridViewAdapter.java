@@ -61,28 +61,32 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
 
-        NativoAdType adType = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, gridView, i);
-        if (adType.equals(NativoAdType.AD_TYPE_VIDEO)) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (adType.equals(NativoAdType.AD_TYPE_NATIVE)) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-        } else if (adType.equals(NativoAdType.AD_TYPE_STANDARD_DISPLAY)){
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
-        }
+        if (shouldPlaceNativoAdAtIndex(i)) {
+            NativoAdType adType = NativoSDK.getAdTypeForIndex(SECTION_URL, gridView, i);
+            switch (adType) {
+                case AD_TYPE_NATIVE:
+                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
+                case AD_TYPE_VIDEO:
+                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
+                case AD_TYPE_STANDARD_DISPLAY:
+                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
+                default:
+                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
+            }
+            boolean isNativoAdAvailable = NativoSDK.placeAdInView(view, gridView, SECTION_URL, i, this, null);
 
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, gridView, SECTION_URL, i, this, null);
-        if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
-            if (!ad) {
+            // Hide if ad could not be placed in view
+            if (!isNativoAdAvailable) {
                 view.setVisibility(View.GONE);
             } else {
                 view.setVisibility(View.VISIBLE);
             }
         } else {
+            // Publisher article view
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
             bindView(view, i);
         }
-
         return view;
     }
 
@@ -100,7 +104,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((TextView) view.findViewById(R.id.article_title)) != null) {
                 ((TextView) view.findViewById(R.id.article_title)).setText(R.string.sample_title);
             }
-            if (shouldPlaceAdAtIndex("sample", i)) {
+            if (shouldPlaceNativoAdAtIndex(i)) {
                 view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
             } else {
                 view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
@@ -116,9 +120,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         }
     };
 
-    @Override
-    public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i % 2 == 0;
+    public boolean shouldPlaceNativoAdAtIndex(int i) {
+        return i % 2 == 1;
     }
 
     @Override
@@ -145,13 +148,12 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
         notifyDataSetChanged();
     }
 
     @Override
-    public void onFail(String s) {
+    public void onFail(String section, Integer index) {
         notifyDataSetChanged();
     }
-
 }
