@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
+import com.google.android.exoplayer2.PlaybackException;
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
@@ -179,6 +180,11 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     @Override
     public void onVideoPlaybackCompleted() {
         Log.d(TAG, "onVideoPlaybackCompleted: ");
+    }
+
+    @Override
+    public void onVideoPlaybackError(PlaybackException e) {
+        Log.d(TAG, "onVideoPlaybackError: " + e);
     }
 
     @Override
