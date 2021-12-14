@@ -63,7 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     // Helper method to determine which indexes should be Nativo ads
     public boolean shouldPlaceNativoAdAtIndex(int i) {
-        return i % 2 == 1;
+        return i % 3 == 1;
     }
 
     @Override

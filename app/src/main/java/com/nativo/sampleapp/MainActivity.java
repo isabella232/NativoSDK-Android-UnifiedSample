@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
         NativoSDK.enableDevLogs();
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
+        //NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
     }
 
     private void setMainFragment(NtvFragmentType fragmentType) {
