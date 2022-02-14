@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-import com.google.android.exoplayer2.PlaybackException;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
@@ -169,11 +168,6 @@ public class NativeVideoAd implements NtvVideoAdInterface {
     @Override
     public void onVideoPlaybackCompleted() {
         Log.d(TAG, "onVideoPlaybackCompleted: ");
-    }
-
-    @Override
-    public void onVideoPlaybackError(PlaybackException e) {
-        Log.d(TAG, "onVideoPlaybackError: ");
     }
 
     @Override
