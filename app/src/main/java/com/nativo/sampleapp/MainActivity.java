@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
                 viewPager.setOffscreenPageLimit(0);
                 TabLayout tabLayout = findViewById(R.id.tabs);
                 tabLayout.setupWithViewPager(viewPager);
+
             }
         }, 2000);
     }
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
         NativoSDK.enableDevLogs();
 
         // Force specific ad types if needed
-//        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_VIDEO);
+        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
     }
 
     private void setMainFragment(NtvFragmentType fragmentType) {

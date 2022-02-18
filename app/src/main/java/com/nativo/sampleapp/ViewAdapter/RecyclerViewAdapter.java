@@ -83,16 +83,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     }
 
     @Override
-    public RecyclerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewTypeInt) {
         RecyclerListViewHolder viewHolder;
         View adViewTry;
-        if (i == 1) { // Nativo Article
+        if (viewTypeInt == 1) { // Nativo Article
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             viewHolder = new NativeAdRecycler(adViewTry, viewGroup);
-        } else if (i == 2) { // Nativo Video
+        } else if (viewTypeInt == 2) { // Nativo Video
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
             viewHolder = new NativeVideoAdRecycler(adViewTry, viewGroup);
-        } else if (i == 3) { // Nativo Banner Ad
+        } else if (viewTypeInt == 3) { // Nativo Banner Ad
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
             viewHolder = new StandardDisplayAdRecycler(adViewTry, viewGroup);
         } else { // Publisher Article Layout
